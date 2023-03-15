@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "cpu.h"
-int main() {
-    printf("Hello, World! %i \n", hlt);
+
+void teste(){
+
     printf("hlt: %i\n",hlt);
     printf("nop: %i\n",nop);
     printf("add: %i\n",add);
@@ -40,6 +41,11 @@ int main() {
 
     printf("lsh: %i\n",lsh);
     printf("rsh: %i\n",rsh);
+};
+
+
+int main() {
+   teste();
 
 
     return 0;
