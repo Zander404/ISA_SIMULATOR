@@ -1,53 +1,53 @@
 //Formato de Instrucao 1
-#define hlt 0b00000
-#define nop 0b00001
+#define hlt 0b00000     //0x00   //0x00
+#define nop 0b00001     //0x08  //0x01
 
-#define add 0b00010
-#define sub 0b00011
-#define mul 0b00100
-#define div 0b00101
+#define add 0b00010     //0x10  //0x02
+#define sub 0b00011     //0x18  //0x03
+#define mul 0b00100     //0x20  //0x04
+#define div 0b00101     //0x28  //0x05
 
-#define cmp 0b00110
-#define xchg 0b00111
+#define cmp 0b001100    //0x30  //0x06
+#define xchg 0b00111    //0x38  //0x07
 
-#define and 0b01000
-#define or 0b01001
-#define xor 0b01010
-#define not 0b01011
+#define and 0b01000     //0x40  //0x08
+#define or 0b01001      //0x48  //0x09
+#define xor 0b01010     //0x50  //0x0a
+#define not 0b01011     //0x58  //0x0b
 
 //Formato de instrucao 2
-#define je 0b01100
-#define jne 0b01101
+#define je 0b01100      //0x60  //0x0c
+#define jne 0b01101     //0x68  //0x0d
 
-#define jl 0b01110
-#define jle 0b01111
+#define jl 0b01110      //0x70  //0x0e
+#define jle 0b01111     //0x78  //0x0f
 
-#define jg 0b10000
-#define jge 0b10001
+#define jg 0b10000      //0x80  //0x10
+#define jge 0b10001     //0x88  //0x11
 
-#define jmp 0b10010
+#define jmp 0b10010     //0x90  //0x12
 
-#define lda 0b10011
-#define ldb 0b10100
+//Carrega o registrador com uma palavra de 16 bits
+#define lda 0b10011     //0x98  //0x13
+#define ldb 0b10100     //0xa0  //0x14
 
-#define sta 0b10101
-#define stb 0b10110
-
+//Armazena em uma palavra de 16 bits
+#define sta 0b10101     //0xa8  //0x15
+#define stb 0b10110     //0xb0  //0x16
 
 
 //Formato de Instrucao 1
-#define ldrb 0b10111
-
+#define ldrb 0b10111    //0xb8  //0x17
 
 
 //Formato de Instrucao 3
-#define movial 0b11000
-#define moviah 0b11001
+#define movial 0b11000  //0xc0  //0x18
+#define moviah 0b11001  //0xc8  //0x19
 
-#define addia 0b11010
-#define subia 0b11011
-#define mulia 0b11100
-#define divia 0b11101
+#define addia 0b11010   //0xd0  //0x1a
+#define subia 0b11011   //0xd8  //0x1b
+#define mulia 0b11100   //0xe0  //0x1c
+#define divia 0b11101   //0xe8  //0x1d
 
-#define lsh 0b11110
-#define rsh 0b11111
+#define lsh 0b11110     //0xf0  //0x1e
+#define rsh 0b11111     //0xf8  //0x1f
