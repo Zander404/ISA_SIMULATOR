@@ -305,22 +305,34 @@ void decodifica() {
     }
 
     //Estrutura tipo 1
+//    XXXX X000 0000 0000
     if (IR >= hlt && IR <= not || IR == ldrb) {
-//        printf("Intrucao tipo 1. O valor e %i", IR);
+//        printf("Instrucao tipo 1. O valor e %i", IR);
+        if(LR == 0){
+            IR = (MBR >> 27);  //32-5=27
+            MAR = (MBR >> 16); //32-16=28
+
+
+        }else{
+
+        }
+
 
 
 
     }
 
     //Instrucao Tipo 2
+//    XXXX XMMM MMMM MMMM
     if (IR >= je && IR <= stb) {
-        printf("Intrucao tipo 2. O valor e %i", IR);
+        printf("Instrucao tipo 2. O valor e %i", IR);
     }
 
 
     //Instrucao Tipo 3
+
     if (IR >= movial && IR <= rsh) {
-        printf(" Intrucao tipo 3. O valor e %i", IR);
+        printf(" Instrucao tipo 3. O valor e %i", IR);
     }
 
 }

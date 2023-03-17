@@ -1,5 +1,5 @@
 //Formato de Instrucao 1
-#define hlt 0b00000     //0x00   //0x00
+#define hlt 0b00000     //0x00  //0x00
 #define nop 0b00001     //0x08  //0x01
 
 #define add 0b00010     //0x10  //0x02
@@ -51,3 +51,8 @@
 
 #define lsh 0b11110     //0xf0  //0x1e
 #define rsh 0b11111     //0xf8  //0x1f
+
+
+#define maskEnd1
+#define maskEnd2
+#define mask
