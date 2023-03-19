@@ -53,6 +53,10 @@
 #define rsh 0b11111     //0xf8  //0x1f
 
 
-#define maskEnd1
-#define maskEnd2
-#define mask
+#define maskir1 0xf8000000      //| 1111 1xxx | xxxx xxxx | xxxx xxxx | xxxx xxxx
+#define maskmar1 0x07FF0000     //| xxxx x111 | 1111 1111 | xxxx xxxx | xxxx xxxx
+
+#define maskir2 0x0000F800      //| xxxx xxxx | xxxx xxxx | 1111 1xxx | xxxx xxxx
+#define maskmar2 0x000007FF     //| xxxx xxxx | xxxx xxxx | xxxx x111 | 1111 1111
+
+
