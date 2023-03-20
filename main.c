@@ -289,12 +289,12 @@ void busca() {
     } else {
         MAR = PC;
         MBR = MEMORIA[MAR++];
-        int i;
-        for (i = 0; i < 4; i++) {
-            MBR = (MBR << 8) | MEMORIA[MAR++];
-        };
-
     }
+
+    int i;
+    for (i = 0; i < 4; i++) {
+        MBR = (MBR << 8) | MEMORIA[MAR++];
+    };
 }
 
 void decodifica() {
@@ -504,16 +504,56 @@ void executa() {
 
 int main() {
 
-    MEMORIA[1];
-    MEMORIA[2];
-    MEMORIA[3];
-    MEMORIA[4];
-    MEMORIA[5];
-    MEMORIA[6];
-    MEMORIA[7];
-    MEMORIA[8];
-    MEMORIA[9];
-    MEMORIA[10];
+//    0;i;lda 96/ldb 98
+    MEMORIA[0] = 0x98;
+    MEMORIA[1] = 0x96;
+    MEMORIA[2] = 0xa0;
+    MEMORIA[3] = 0x98;
+
+
+//    4;i;sub/xchg
+    MEMORIA[4] = 0x18;
+    MEMORIA[5] = 0x00;
+    MEMORIA[6] = 0x38;
+    MEMORIA[7] = 0x00;
+
+//    8;i;lda 94/div
+    MEMORIA[8] = 0x98;
+    MEMORIA[9] = 0x94;
+    MEMORIA[10] = 0x28;
+    MEMORIA[11] = 0x00;
+
+//    c;i;ldb 92/mul
+    MEMORIA[12] = 0xa0;
+    MEMORIA[13] = 0x92;
+    MEMORIA[14] = 0x20;
+    MEMORIA[15] = 0x00;
+
+//    10;i;ldb 90/add
+    MEMORIA[16] = 0xa0;
+    MEMORIA[17] = 0x90;
+    MEMORIA[18] = 0x10;
+    MEMORIA[19] = 0x00;
+
+//    14;i;sta 8e/hlt
+    MEMORIA[20] = 0xa8;
+    MEMORIA[21] = 0x8e;
+    MEMORIA[22] = 0x00;
+    MEMORIA[23] = 0x00;
+
+//    90;d;20
+    MEMORIA[90] = 0x20;
+
+//    92;d;3
+    MEMORIA[92] = 0x03;
+//    94;d;4
+    MEMORIA[94] = 0x04;
+
+//    96;d;5
+    MEMORIA[96] = 0x05;
+
+//    98;d;3
+    MEMORIA[98] = 0x03;
 
 
 
