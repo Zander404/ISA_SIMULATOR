@@ -337,7 +337,168 @@ void decodifica() {
 
 }
 
-void executa(){
+void executa() {
+    if (IR == hlt) {
+//        condicao de parada
+    }
+    if (IR == nop) {
+        if (LR == 1) {
+            PC += 4;
+        }
+    }
+    if (IR == add) {
+        PC += 4;
+    }
+    if (IR == sub) {
+        PC += 4;
+    }
+    if (IR == mul) {
+        PC += 4;
+    }
+    if (IR == div) {
+        PC += 4;
+    }
+    if (IR == cmp) {
+        if (A == B) {
+            E = 1;
+        } else {
+            E = 0;
+        }
+        if (A < B) {
+            L = 1;
+        } else {
+            L = 0;
+        }
+        if (A > B) {
+            G = 1;
+        } else {
+            G = 0;
+        }
+
+        PC += 4;
+    }
+    if (IR == xchg) {
+        T = A;
+        A = B;
+        B = A;
+
+        PC += 4;
+    }
+    if (IR == and) {
+        A = A & B;
+
+        PC += 4;
+    }
+    if (IR == or) {
+        A = A | B;
+
+        PC += 4;
+    }
+    if (IR == xor) {
+        A = A ^ B;
+
+        PC += 4;
+    }
+    if (IR == not) {
+        A = !A;
+
+        PC += 4;
+    }
+    if (IR == je) {
+        if (E == 1) {
+            PC = MAR;
+        } else {
+            PC += 4;
+        }
+    }
+    if (IR == jne) {
+        if (E == 0) {
+            PC = MAR;
+        } else {
+            PC += 4;
+        }
+
+    }
+    if (IR == jl) {
+        if (L == 1) {
+            PC = MAR;
+        } else {
+            PC += 4;
+        }
+    }
+    if (IR == jle) {
+        if (E == 1 | L == 1) {
+            PC = MAR;
+        } else {
+            PC += 4;
+        }
+    }
+    if (IR == jg) {
+        if (G == 1) {
+            PC = MAR;
+        } else {
+            PC += 4;
+        }
+    }
+
+    if (IR == jge) {
+        if (E == 1 | G == 1) {
+            PC = MAR;
+        } else {
+            PC += 4;
+        }
+    }
+    if (IR == jmp) {
+        PC = MAR;
+    }
+    //LEMBRAR DE FAZER
+    if (IR == lda) {
+        PC += 4;
+    }
+    if (IR == ldb) {
+        PC += 4;
+    }
+
+
+    if (IR == sta) {
+        PC += 4;
+    }
+    if (IR == stb) {
+        PC += 4;
+    }
+    if (IR == ldrb) {
+        PC += 4;
+    }
+    if (IR == movial) {
+        PC += 4;
+    }
+    if (IR == moviah) {
+        PC += 4;
+    }
+    if (IR == addia) {
+        A = A + IMM;
+        PC += 4;
+    }
+    if (IR == subia) {
+        A = A - IMM;
+        PC += 4;
+    }
+    if (IR == mulia) {
+        A = A * IMM;
+        PC += 4;
+    }
+    if (IR == divia) {
+        A = A / IMM;
+        PC += 4;
+    }
+    if (IR == lsh) {
+        A = (A << IMM);
+        PC += 4;
+    }
+    if (IR == rsh) {
+        A = (A >> IMM);
+        PC += 4;
+    }
 
 }
 
