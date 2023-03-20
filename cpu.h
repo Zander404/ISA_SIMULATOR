@@ -59,4 +59,7 @@
 #define maskir2 0x0000F800      //| xxxx xxxx | xxxx xxxx | 1111 1xxx | xxxx xxxx
 #define maskmar2 0x000007FF     //| xxxx xxxx | xxxx xxxx | xxxx x111 | 1111 1111
 
+// Aplicando maskara no IBR basta copiar a mask IR1 e mask MAR1
+#define maskibr 0x000           //| xxxx xxxx | xxxx xxxx | 1111 1111 | 1111 1111
+
 
