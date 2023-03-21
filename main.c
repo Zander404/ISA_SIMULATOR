@@ -298,6 +298,7 @@ void busca() {
     printf("%x", MBR);
 }
 
+
 void decodifica() {
 
     if (LR == 0) {
