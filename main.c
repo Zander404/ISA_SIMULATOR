@@ -301,40 +301,42 @@ void busca() {
 
 void decodifica() {
 
-    if (LR == 0) {
-        IR = MBR >> 27;
-        IBR = MBR >> 16;
+    if(LR == 0){
+        IR = (MBR >> 27);  //32-5=27
+        MAR = (MBR >> 16); //32-16=28
+
+
+    }else{
+
     }
 
     //Estrutura tipo 1
 //    XXXX X000 0000 0000
     if (IR >= hlt && IR <= not || IR == ldrb) {
-//        printf("Instrucao tipo 1. O valor e %i", IR);
-        if(LR == 0){
-            IR = (MBR >> 27);  //32-5=27
-            MAR = (MBR >> 16); //32-16=28
-
-
-        }else{
-
-        }
-
-
-
+        printf("\nInstrucao tipo 2.");
+        printf("\nValor do IR: %x", IR);
+        printf("\nValor do PC: %x",PC);
+        printf("\nValor do MBR: %x", MBR);
 
     }
 
     //Instrucao Tipo 2
 //    XXXX XMMM MMMM MMMM
     if (IR >= je && IR <= stb) {
-        printf("Instrucao tipo 2. O valor e %i", IR);
+        printf("\nInstrucao tipo 2.");
+        printf("\nValor do IR: %x", IR);
+        printf("\nValor do PC: %x",PC);
+        printf("\nValor do MBR: %x", MBR);
     }
 
 
     //Instrucao Tipo 3
 
     if (IR >= movial && IR <= rsh) {
-        printf(" Instrucao tipo 3. O valor e %i", IR);
+        printf("\nInstrucao tipo 3.");
+        printf("\nValor do IR: %x", IR);
+        printf("\nValor do PC: %x",PC);
+        printf("\nValor do MBR: %x", MBR);
     }
 
 }
@@ -564,7 +566,7 @@ int main() {
     MAR = 0;
 
     busca();
-//    decodifica();
+    decodifica();
 //    while (IR!=hlt){
 //        busca();
 //        decodifica();
