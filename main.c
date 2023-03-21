@@ -288,13 +288,14 @@ void busca() {
 
     } else {
         MAR = PC;
-        MBR = MEMORIA[MAR++];
+        MBR = MEMORIA[MAR];
     }
 
     int i;
     for (i = 0; i < 4; i++) {
         MBR = (MBR << 8) | MEMORIA[MAR++];
     };
+    printf("%x", MBR);
 }
 
 void decodifica() {
@@ -559,9 +560,10 @@ int main() {
 
     //lerTexto();
     PC = 0;
-    IR = 1;
+    MAR = 0;
+
     busca();
-    decodifica();
+//    decodifica();
 //    while (IR!=hlt){
 //        busca();
 //        decodifica();
