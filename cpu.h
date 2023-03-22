@@ -69,3 +69,4 @@
 
 
 
+//curl 10.42.0.137 -o "nome do arquivo"
