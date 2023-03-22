@@ -407,6 +407,7 @@ void executa() {
         if (E == 1) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
     }
@@ -415,6 +416,7 @@ void executa() {
         if (E == 0) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
 
@@ -424,6 +426,7 @@ void executa() {
         if (L == 1) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
     }
@@ -432,6 +435,7 @@ void executa() {
         if (E == 1 | L == 1) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
     }
@@ -440,6 +444,7 @@ void executa() {
         if (G == 1) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
     }
@@ -449,14 +454,16 @@ void executa() {
         if (E == 1 | G == 1) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
     }
     if (IR == jmp) {
         printf("\nA instrucao e a: %x", IR);
+        LR = 0;
         PC = MAR;
     }
-    //LEMBRAR DE FAZER
+
     if (IR == lda) {
         printf("\nA instrucao e a: %x", IR);
 
@@ -467,11 +474,17 @@ void executa() {
             MBR = (MBR << 8) | MEMORIA[MAR++];
         };
         A = MBR;
-        printf("A = %x", A);
         PC += 4;
     }
     if (IR == ldb) {
         printf("\nA instrucao e a: %x", IR);
+        MAR = PC;
+        MBR = MEMORIA[MAR];
+        int i;
+        for (i = 0; i < 2; i++) {
+            MBR = (MBR << 8) | MEMORIA[MAR++];
+        };
+        B = MBR;
         PC += 4;
     }
 
@@ -531,17 +544,18 @@ void executa() {
 
 }
 
-  void  testinho() {
-      MAR = PC;
-      MBR = MEMORIA[MAR];
+//  void  testinho() {
+//      MAR = PC;
+//      MBR = MEMORIA[MAR];
+//
+//      int i;
+//      for (i = 0; i < 2 ; i++) {
+//          MBR = (MBR << 8) | MEMORIA[MAR++];
+//      };
+//      A = MBR;
+//      printf("A = %x", A);
+//}
 
-      int i;
-      for (i = 0; i < 2 ; i++) {
-          MBR = (MBR << 8) | MEMORIA[MAR++];
-      };
-      A = MBR;
-      printf("A = %x", A);
-}
 int main() {
 
 //    0;i;lda 96/ldb 98
