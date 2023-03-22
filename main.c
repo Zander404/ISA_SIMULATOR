@@ -457,7 +457,6 @@ void executa() {
         PC += 4;
     }
 
-
     if (IR == sta) {
         printf("\nA instrucao e a: %x", IR);
 
@@ -480,6 +479,7 @@ void executa() {
         printf("\nA instrucao e a: %x", IR);
         PC += 4;
     }
+
     if (IR == addia) {
         printf("\nA instrucao e a: %x", IR);
         A = A + IMM;
@@ -513,6 +513,17 @@ void executa() {
 
 }
 
+  void  testinho() {
+      MAR = PC;
+      MBR = MEMORIA[MAR];
+
+      int i;
+      for (i = 0; i < 2 ; i++) {
+          MBR = (MBR << 8) | MEMORIA[MAR++];
+      };
+      A = MBR;
+      printf("A = %x", A);
+}
 int main() {
 
 //    0;i;lda 96/ldb 98
