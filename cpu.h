@@ -52,14 +52,20 @@
 #define lsh 0b11110     //0xf0  //0x1e
 #define rsh 0b11111     //0xf8  //0x1f
 
-
+// Aplicando maskara no IBR basta copiar a mask IR1 e mask MAR1
 #define maskir1 0xf8000000      //| 1111 1xxx | xxxx xxxx | xxxx xxxx | xxxx xxxx
 #define maskmar1 0x07FF0000     //| xxxx x111 | 1111 1111 | xxxx xxxx | xxxx xxxx
 
-#define maskir2 0x0000F800      //| xxxx xxxx | xxxx xxxx | 1111 1xxx | xxxx xxxx
+// Aplicando maskara no IBR basta copiar a mask IR2 e mask MAR2
+#define maskir2 0xf800              //| 1111 1xxx | xxxx xxxx |
 #define maskmar2 0x000007FF     //| xxxx xxxx | xxxx xxxx | xxxx x111 | 1111 1111
 
-// Aplicando maskara no IBR basta copiar a mask IR1 e mask MAR1
-#define maskibr 0x000           //| xxxx xxxx | xxxx xxxx | 1111 1111 | 1111 1111
+// Maskara IBR
+#define maskibr 0x0000ffff      //| xxxx xxxx | xxxx xxxx | 1111 1111 | 1111 1111
+
+// Maskara REG A e REG B
+#define maskA 0xffff0000         //| 1111 1111 | 1111 1111 | xxxx xxxx | xxxx xxxx
+#define maskB 0x0000ffff         //| xxxx xxxx | xxxx xxxx | 1111 1111 | 1111 1111
+
 
 
