@@ -249,13 +249,24 @@ void busca() {
 
 
 void decodifica() {
-    IBR = (MBR&maskibr);
-
 
     if(LR == 0){
-        IR = (MBR&maskir1)>>27;
-        MAR = (MBR&maskmar1)>>16;
         IBR = (MBR&maskibr);
+
+        printf("\n\nEstou na esquerda");
+        //Estrutura tipo 1
+        //    XXXX X000 0000 0000
+        if (IR >= hlt && IR <= not || IR == ldrb) {
+            IR = (MBR&maskir1)>>27;
+
+
+        }
+
+        //Instrucao Tipo 2
+        //    XXXX XMMM MMMM MMMM
+        if (IR >= je && IR <= stb) {
+            IR = (MBR&maskir1)>>27;
+            MAR = (MBR&maskmar1)>>16;
 
         }
 
@@ -371,44 +382,58 @@ void executa() {
         }
 
         PC += 4;
+        LR = !LR;
     }
     if (IR == xchg) {
         printf("A instrucao e a: %x", IR);
+
         T = A;
+
         A = B;
-        B = A;
+
+        B = T;
+
 
         PC += 4;
+        LR = !LR;
     }
     if (IR == and) {
         printf("\nA instrucao e a: %x", IR);
         A = A & B;
 
         PC += 4;
+        LR = !LR;
     }
     if (IR == or) {
         printf("\nA instrucao e a: %x", IR);
         A = A | B;
 
         PC += 4;
+        LR = !LR;
     }
     if (IR == xor) {
         printf("\nA instrucao e a: %x", IR);
         A = A ^ B;
 
         PC += 4;
+        LR = !LR;
     }
     if (IR == not) {
         printf("\nA instrucao e a: %x", IR);
         A = !A;
 
         PC += 4;
+        LR = !LR;
     }
+
+
+    //INSTRUCOES DO TIPO 2
     if (IR == je) {
         printf("\nA instrucao e a: %x", IR);
         if (E == 1) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
     }
@@ -417,6 +442,7 @@ void executa() {
         if (E == 0) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
 
@@ -426,6 +452,7 @@ void executa() {
         if (L == 1) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
     }
@@ -434,6 +461,7 @@ void executa() {
         if (E == 1 | L == 1) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
     }
@@ -442,6 +470,7 @@ void executa() {
         if (G == 1) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
     }
@@ -451,99 +480,170 @@ void executa() {
         if (E == 1 | G == 1) {
             PC = MAR;
         } else {
+            LR = 0;
             PC += 4;
         }
     }
     if (IR == jmp) {
         printf("\nA instrucao e a: %x", IR);
+        LR = 0;
         PC = MAR;
     }
-    //LEMBRAR DE FAZER
+
+
     if (IR == lda) {
         printf("\nA instrucao e a: %x", IR);
+        printf("\nFAZENDO O LOAD A");
 
-        MAR = PC;
-        MBR = MEMORIA[MAR];
-        int i;
-        for (i = 0; i < 2; i++) {
-            MBR = (MBR << 8) | MEMORIA[MAR++];
-        };
-        A = MBR;
-        printf("A = %x", A);
-        PC += 4;
+        printf("\n O valor da Flag e: %i", LR);
+        if(LR == 0){
+            MAR = PC;
+            MBR = MEMORIA[MAR];
+            int i;
+            for (i = 0; i < 2; i++) {
+                MBR = (MBR << 8) | MEMORIA[MAR++];
+            };
+            A = MBR;
+            LR= !LR;
+
+        }else{
+            MAR = PC;
+            MBR = MEMORIA[MAR];
+
+            MBR = IBR;
+
+            A = MBR;
+
+            PC += 4;
+            LR= !LR;
+        }
     }
+
     if (IR == ldb) {
         printf("\nA instrucao e a: %x", IR);
-        PC += 4;
+        printf("\nFAZENDO O LOAD B");
+        printf("\n O valor da Flag e: %i", LR);
+        if(LR == 0){
+            MAR = PC;
+            MBR = MEMORIA[MAR];
+            int i;
+            for (i = 0; i < 2; i++) {
+                MBR = (MBR << 8) | MEMORIA[MAR++];
+            };
+            B = MBR;
+            LR= !LR;
+
+        }else{
+            MAR = PC;
+            MBR = MEMORIA[MAR];
+
+            MBR = IBR;
+
+            B = MBR;
+
+            PC += 4;
+            LR= !LR;
+        }
     }
 
     if (IR == sta) {
         printf("\nA instrucao e a: %x", IR);
 
+        if(LR == 0){
+            MEMORIA[MAR++] = A >> 11;
+            MEMORIA[MAR] = (A & maskstA);
+            printf("\t\t%i",A);
+            LR= !LR;
+        } else{
+            MAR++;
+            MAR++;
+            MEMORIA[MAR++] = IBR >> 11;
+            MEMORIA[MAR] = (IBR & maskstA);
+            LR= !LR;
+        }
+
         PC += 4;
+
     }
     if (IR == stb) {
         printf("\nA instrucao e a: %x", IR);
 
+        if(LR == 0){
+            MEMORIA[MAR++] = B >> 11;
+            MEMORIA[MAR] = (B & maskstA);
+            LR= !LR;
+        } else{
+            MAR++;
+            MAR++;
+            MEMORIA[MAR++] = IBR >> 11;
+            MEMORIA[MAR] = (IBR & maskstA);
+            LR= !LR;
+        }
         PC += 4;
+
     }
+
+
+    //INSTRUCAO TIPO 1
     if (IR == ldrb) {
         printf("\nA instrucao e a: %x", IR);
+        A = B;
         PC += 4;
+        LR= !LR;
     }
+
+
+    //INSTRUCAO TIPO 3
     if (IR == movial) {
         printf("\nA instrucao e a: %x", IR);
         PC += 4;
+        LR= !LR;
     }
     if (IR == moviah) {
         printf("\nA instrucao e a: %x", IR);
         PC += 4;
+        LR= !LR;
     }
 
     if (IR == addia) {
         printf("\nA instrucao e a: %x", IR);
         A = A + IMM;
         PC += 4;
+        LR= !LR;
     }
     if (IR == subia) {
         printf("\nA instrucao e a: %x", IR);
         A = A - IMM;
         PC += 4;
+        LR= !LR;
     }
     if (IR == mulia) {
         printf("\nA instrucao e a: %x", IR);
         A = A * IMM;
         PC += 4;
+        LR= !LR;
     }
     if (IR == divia) {
         printf("\nA instrucao e a: %x", IR);
         A = A / IMM;
         PC += 4;
+        LR= !LR;
     }
     if (IR == lsh) {
         printf("\nA instrucao e a: %x", IR);
         A = (A << IMM);
         PC += 4;
+        LR= !LR;
     }
     if (IR == rsh) {
         printf("\nA instrucao e a: %x", IR);
         A = (A >> IMM);
         PC += 4;
+        LR= !LR;
     }
 
 }
 
-  void  testinho() {
-      MAR = PC;
-      MBR = MEMORIA[MAR];
-
-      int i;
-      for (i = 0; i < 2 ; i++) {
-          MBR = (MBR << 8) | MEMORIA[MAR++];
-      };
-      A = MBR;
-      printf("A = %x", A);
-}
 int main() {
 
 //    0;i;lda 96/ldb 98
@@ -551,7 +651,6 @@ int main() {
     MEMORIA[1] = 0x96;
     MEMORIA[2] = 0xa0;
     MEMORIA[3] = 0x98;
-
 
 //    4;i;sub/xchg
     MEMORIA[4] = 0x18;
@@ -597,36 +696,40 @@ int main() {
 //    98;d;3
     MEMORIA[98] = 0x03;
 
-
-
     //lerTexto();
     PC = 0;
     MAR = 0;
+    IR=1;
 
-    busca();
+
+//    busca();
 //    decodifica();
 //    executa();
+//    printf("\n O valor da Flag e: %i", LR);
 
-testinho();
-//    while (IR!=hlt){
-//        busca();
-//        decodifica();
-//        executa();
-//
-//        printf("Registrador A tem o valor %x\n", A);
-//        printf("Registrador B tem o valor %x\n", B);
-//
-//        printf("---------------Memorias-----------------\n");
-//        for (int i = 0; i < 154 ; i++) {
-//            printf("%d=[%x]  ",i,MEMORIA[i]);
-//            if(i%10 == 0 && i!=0){
-//                printf("\n");
-//            }
-//        }
-//        printf("\nPressione enter para executar o proximo ciclo de instrucao\n");
+
+//testinho();
+    while(IR!=0){
+        busca();
+        decodifica();
+        executa();
+
+
+        printf("\nRegistrador A tem o valor %x", A);
+        printf("\nRegistrador B tem o valor %x\n", B);
+
+        printf("---------------Memorias-----------------\n");
+        int i;
+        for(i = 0; i < 154 ; i++) {
+            printf("%d=[%x]  ",i,MEMORIA[i]);
+            if(i%10 == 0 && i!=0){
+                printf("\n");
+            }
+        }
+        printf("\nPressione enter para executar o proximo ciclo de instrucao\n");
 //        getchar();
 }
 
 
-//    return 0;
-//}
+    return 0;
+}
