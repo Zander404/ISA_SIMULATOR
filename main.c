@@ -791,7 +791,6 @@ int main() {
     MEMORIA[0x29] = 0x00;
     MEMORIA[0x2a] = 0x00;
     MEMORIA[0x2b] = 0x00;
-
 // 8a;d;0
     MEMORIA[0x8a] = 0x00;
 //8c;d;1
