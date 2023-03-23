@@ -57,7 +57,7 @@
 #define maskmar1 0x07FF0000     //| xxxx x111 | 1111 1111 | xxxx xxxx | xxxx xxxx
 
 // Aplicando maskara no IBR basta copiar a mask IR2 e mask MAR2
-#define maskir2 0xf800              //| 1111 1xxx | xxxx xxxx |
+#define maskir2 0xf800           //| 1111 1xxx | xxxx xxxx |
 #define maskmar2 0x000007FF     //| xxxx xxxx | xxxx xxxx | xxxx x111 | 1111 1111
 
 // Maskara IBR
@@ -68,6 +68,6 @@
 #define maskB 0x0000ffff         //| xxxx xxxx | xxxx xxxx | 1111 1111 | 1111 1111
 
 #define maskstA 0x07ff           //| xxxx x111 | 1111 1111 |
-#define lixo 0x8e
-
+#define lixo 0x8e                //| xxxx xxxx | 1111 1111 |
+#define lixo2 0x                 //| xxxx x111 | 1111
 //curl 10.42.0.137 -o "nome do arquivo"

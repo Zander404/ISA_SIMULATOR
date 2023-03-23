@@ -14,7 +14,7 @@ unsigned char E, L, G, LR;                  //8 bits
 unsigned short int A, B, T;                 //16 bits
 
 
-//int criar_palavra(char instrucao[], unsigned int reg1, unsigned int reg2, unsigned int menOuImm, int inicio)
+//int criar_palavra(char instrucao[], unsigned short int regA, unsigned short int regB, unsigned int menOuImm, int inicio)
 //{
 //    int palavra;
 //    if(strcmp(instrucao,"ld")== 0){
@@ -134,7 +134,7 @@ unsigned short int A, B, T;                 //16 bits
 //
 //    return palavra;
 //}
-//
+////
 //void lerTexto()
 //{
 //    FILE *arq;
@@ -276,6 +276,7 @@ void decodifica() {
             IMM = (MBR&maskmar1)>>16;
         }
         printf("\n O valor da Flag e: %i", LR);
+        printf("\n\n\t\t O VALOR DE PC: %i",PC);
         printf("\n O valor do IR e: %x",IR);
         printf("\n O valor do IBR e: %x",IBR);
         printf("\n O valor do MBR e: %x",MBR);
@@ -309,6 +310,7 @@ void decodifica() {
         }
         printf("\n\nEstou na direita");
         printf("\n O valor da Flag e: %i", LR);
+        printf("\n\n\t\t O VALOR DE PC: %i",PC);
         printf("\n O valor do IR e: %x",IR);
         printf("\n O valor do IBR e: %x",IBR);
         printf("\n O valor do MBR e: %x",MBR);
@@ -329,7 +331,10 @@ void executa() {
     }
     if (IR == nop) {
         printf("A instrucao e a: %x", IR);
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
+
         LR = !LR;
 
     }
@@ -337,8 +342,9 @@ void executa() {
         printf("A instrucao e a: %x", IR);
 
         A = A + B;
-
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
 
         LR = !LR;
 
@@ -347,20 +353,25 @@ void executa() {
         printf("A instrucao e a: %x", IR);
 
         A = A - B;
-        printf("\n SOMA  MALUCA: %x", A);
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR = !LR;
     }
     if (IR == mul) {
         printf("A instrucao e a: %x", IR);
-        A = A* B;
-        PC += 4;
+        A = A*B;
+        if(LR==1){
+            PC += 4;
+        }
         LR = !LR;
     }
     if (IR == div) {
         printf("A instrucao e a: %x", IR);
         A = A/B;
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR = !LR;
     }
     if (IR == cmp) {
@@ -381,7 +392,9 @@ void executa() {
             G = 0;
         }
 
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR = !LR;
     }
     if (IR == xchg) {
@@ -394,35 +407,45 @@ void executa() {
         B = T;
 
 
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR = !LR;
     }
     if (IR == and) {
         printf("\nA instrucao e a: %x", IR);
         A = A & B;
 
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR = !LR;
     }
     if (IR == or) {
         printf("\nA instrucao e a: %x", IR);
         A = A | B;
 
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR = !LR;
     }
     if (IR == xor) {
         printf("\nA instrucao e a: %x", IR);
         A = A ^ B;
 
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR = !LR;
     }
     if (IR == not) {
         printf("\nA instrucao e a: %x", IR);
         A = !A;
 
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR = !LR;
     }
 
@@ -503,20 +526,21 @@ void executa() {
             for (i = 0; i < 2; i++) {
                 MBR = (MBR << 8) | MEMORIA[MAR++];
             };
-            A = MBR;
-            LR= !LR;
+            MAR = MBR & maskstA;
 
+            printf("\n\n\n\t\t\t\t MAR: %x", MAR);
+            A = MEMORIA[MAR];
+            printf("\n\n\n\t\t\t\t A: %x",A);
         }else{
-            MAR = PC;
+
             MBR = MEMORIA[MAR];
 
-            MBR = IBR;
-
-            A = MBR;
+            MAR = IBR & maskstA;
+            A = MEMORIA[MAR];
 
             PC += 4;
-            LR= !LR;
         }
+        LR= !LR;
     }
 
     if (IR == ldb) {
@@ -530,9 +554,11 @@ void executa() {
             for (i = 0; i < 2; i++) {
                 MBR = (MBR << 8) | MEMORIA[MAR++];
             };
-            B = MBR;
-            LR= !LR;
+            MAR = MBR & maskstA;
 
+            printf("\n\n\n\t\t\t\t MAR: %x", MAR);
+            B = MEMORIA[MAR];
+            printf("\n\n\n\t\t\t\t B: %x",B);
         }else{
             MAR = PC;
             MBR = MEMORIA[MAR];
@@ -542,27 +568,20 @@ void executa() {
             B = MBR;
 
             PC += 4;
-            LR= !LR;
         }
+        LR= !LR;
     }
 
     if (IR == sta) {
         printf("\nA instrucao e a: %x", IR);
-
-        if(LR == 0){
-            MEMORIA[MAR++] = A >> 11;
-            MEMORIA[MAR] = (A & maskstA);
-            printf("\t\t%i",A);
-            LR= !LR;
-        } else{
-            MAR++;
-            MAR++;
-            MEMORIA[MAR++] = IBR >> 11;
-            MEMORIA[MAR] = (IBR & maskstA);
-            LR= !LR;
+        if(LR==0){
+            MEMORIA[MAR] = (A & 0xff);
         }
-
-        PC += 4;
+        else{
+            MEMORIA[MAR] = (A & maskstA);
+            PC+=4;
+        }
+        LR = !LR;
 
     }
     if (IR == stb) {
@@ -588,7 +607,9 @@ void executa() {
     if (IR == ldrb) {
         printf("\nA instrucao e a: %x", IR);
         A = B;
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR= !LR;
     }
 
@@ -596,49 +617,65 @@ void executa() {
     //INSTRUCAO TIPO 3
     if (IR == movial) {
         printf("\nA instrucao e a: %x", IR);
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR= !LR;
     }
     if (IR == moviah) {
         printf("\nA instrucao e a: %x", IR);
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR= !LR;
     }
 
     if (IR == addia) {
         printf("\nA instrucao e a: %x", IR);
         A = A + IMM;
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR= !LR;
     }
     if (IR == subia) {
         printf("\nA instrucao e a: %x", IR);
         A = A - IMM;
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR= !LR;
     }
     if (IR == mulia) {
         printf("\nA instrucao e a: %x", IR);
         A = A * IMM;
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR= !LR;
     }
     if (IR == divia) {
         printf("\nA instrucao e a: %x", IR);
         A = A / IMM;
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR= !LR;
     }
     if (IR == lsh) {
         printf("\nA instrucao e a: %x", IR);
         A = (A << IMM);
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR= !LR;
     }
     if (IR == rsh) {
         printf("\nA instrucao e a: %x", IR);
         A = (A >> IMM);
-        PC += 4;
+        if(LR==1){
+            PC += 4;
+        }
         LR= !LR;
     }
 
@@ -647,55 +684,136 @@ void executa() {
 int main() {
 
 //    0;i;lda 96/ldb 98
-    MEMORIA[0] = 0x98;
-    MEMORIA[1] = 0x96;
-    MEMORIA[2] = 0xa0;
-    MEMORIA[3] = 0x98;
+//    MEMORIA[0x00] = 0x98;
+//    MEMORIA[0x01] = 0x96;
+//    MEMORIA[0x02] = 0xa0;
+//    MEMORIA[0x03] = 0x98;
+//
+////    4;i;sub/xchg
+//    MEMORIA[0x04] = 0x18;
+//    MEMORIA[0x05] = 0x00;
+//    MEMORIA[0x06] = 0x38;
+//    MEMORIA[0x07] = 0x00;
+//
+////    8;i;lda 94/div
+//    MEMORIA[0x08] = 0x98;
+//    MEMORIA[0x09] = 0x94;
+//    MEMORIA[0x0a] = 0x28;
+//    MEMORIA[0x0b] = 0x00;
+//
+////    c;i;ldb 92/mul
+//    MEMORIA[0x0c] = 0xa0;
+//    MEMORIA[0x0d] = 0x92;
+//    MEMORIA[0x0e] = 0x20;
+//    MEMORIA[0x0f] = 0x00;
+//
+////    10;i;ldb 90/add
+//    MEMORIA[0x10] = 0xa0;
+//    MEMORIA[0x11] = 0x90;
+//    MEMORIA[0x12] = 0x10;
+//    MEMORIA[0x13] = 0x00;
+//
+////    14;i;sta 8e/hlt
+//    MEMORIA[0x14] = 0xa8;
+//    MEMORIA[0x15] = 0x8e;
+//    MEMORIA[0x16] = 0x00;
+//    MEMORIA[0x17] = 0x00;
+//
+////    90;d;20
+//    MEMORIA[0x90] = 0x20;
+//
+////    92;d;3
+//    MEMORIA[0x92] = 0x03;
+////    94;d;4
+//    MEMORIA[0x94] = 0x04;
+//
+////    96;d;5
+//    MEMORIA[0x96] = 0x05;
+//
+////    98;d;3
+//    MEMORIA[0x98] = 0x03;
+//REPOSTA 38 OU 0X28
 
-//    4;i;sub/xchg
-    MEMORIA[4] = 0x18;
-    MEMORIA[5] = 0x00;
-    MEMORIA[6] = 0x38;
-    MEMORIA[7] = 0x00;
 
-//    8;i;lda 94/div
-    MEMORIA[8] = 0x98;
-    MEMORIA[9] = 0x94;
-    MEMORIA[10] = 0x28;
-    MEMORIA[11] = 0x00;
+//    0;i;lda 90 / ldb 92 OKKKKKK
+    MEMORIA[0x00] = 0x98;
+    MEMORIA[0x01] = 0x90;
+    MEMORIA[0x02] = 0xa0;
+    MEMORIA[0x03] = 0x92;
 
-//    c;i;ldb 92/mul
-    MEMORIA[12] = 0xa0;
-    MEMORIA[13] = 0x92;
-    MEMORIA[14] = 0x20;
-    MEMORIA[15] = 0x00;
+//    4;i;div / sta 88 OKKKK
+    MEMORIA[0x04] = 0x28;
+    MEMORIA[0x05] = 0x00;
+    MEMORIA[0x06] = 0xa8;
+    MEMORIA[0x07] = 0x88;
 
-//    10;i;ldb 90/add
-    MEMORIA[16] = 0xa0;
-    MEMORIA[17] = 0x90;
-    MEMORIA[18] = 0x10;
-    MEMORIA[19] = 0x00;
+//    8;i;lda 96 / lda 98 OKKKKK
+    MEMORIA[0x08] = 0x98;
+    MEMORIA[0x09] = 0x96;
+    MEMORIA[0x0a] = 0x98;
+    MEMORIA[0x0b] = 0x98;
 
-//    14;i;sta 8e/hlt
-    MEMORIA[20] = 0xa8;
-    MEMORIA[21] = 0x8e;
-    MEMORIA[22] = 0x00;
-    MEMORIA[23] = 0x00;
+//c;i;sub/lda 94 DUVIDOSO
+    MEMORIA[0x0c] = 0x18;
+    MEMORIA[0x0d] = 0x00;
+    MEMORIA[0x0e] = 0x98;
+    MEMORIA[0x0f] = 0x94;
 
-//    90;d;20
-    MEMORIA[90] = 0x20;
+//10;i;mul/lda 88 OKKKKKKK
+    MEMORIA[0x10] = 0x20;
+    MEMORIA[0x11] = 0x00;
+    MEMORIA[0x12] = 0x98;
+    MEMORIA[0x13] = 0x88;
 
-//    92;d;3
-    MEMORIA[92] = 0x03;
-//    94;d;4
-    MEMORIA[94] = 0x04;
+//14;i;add / lda 8a  OKKKKKKK
+    MEMORIA[0x14] = 0x10;
+    MEMORIA[0x15] =0x00;
+    MEMORIA[0x16] = 0x98;
+    MEMORIA[0x17] = 0x8a;
 
-//    96;d;5
-    MEMORIA[96] = 0x05;
+//18;i;add / sta 8a OKKKKKKKK
+    MEMORIA[0x18] = 0x10;
+    MEMORIA[0x19] = 0x00;
+    MEMORIA[0x1a] = 0xa8;
+    MEMORIA[0x1b] = 0x8a;
 
-//    98;d;3
-    MEMORIA[98] = 0x03;
+//1c;i;lda 8c / ldb 8e OKKKKKKK
+    MEMORIA[0x1c] = 0x98;
+    MEMORIA[0x1d] = 0x8c;
+    MEMORIA[0x1e] = 0xa0;
+    MEMORIA[0x1f] = 0x8e;
 
+//20;i;addia 1 / sta 8c ERRRRRO STA NA DIREITA
+    MEMORIA[0x20] = 0xd0;
+    MEMORIA[0x21] = 0x01;
+    MEMORIA[0x22] = 0xa8;
+    MEMORIA[0x23] = 0x8c;
+
+//24;i;cmp / jle 0
+    MEMORIA[0x24] = 0x30;
+    MEMORIA[0x25] = 0x00;
+    MEMORIA[0x26] = 0x78;
+    MEMORIA[0x27] = 0x00;
+
+//28;i;hlt / hlt
+    MEMORIA[0x28] = 0x00;
+    MEMORIA[0x29] = 0x00;
+    MEMORIA[0x2a] = 0x00;
+    MEMORIA[0x2b] = 0x00;
+
+// 8a;d;0
+    MEMORIA[0x8a] = 0x00;
+//8c;d;1
+    MEMORIA[0x8c] = 0x01;
+//8e;d;a
+    MEMORIA[0x8e] = 0x0a;
+//90;d;a
+    MEMORIA[0x90] = 0x0a;
+//92;d;5;
+    MEMORIA[0x92] = 0x05;
+
+
+    // NA POSICAO: 0x8c  RESPOSTA 50 OU 0X32
     //lerTexto();
     PC = 0;
     MAR = 0;
