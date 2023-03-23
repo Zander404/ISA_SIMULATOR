@@ -699,7 +699,7 @@ int main() {
     //lerTexto();
     PC = 0;
     MAR = 0;
-    IR=2;
+    IR=1;
 
 
 //    busca();
