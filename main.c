@@ -337,9 +337,9 @@ void executa() {
         printf("A instrucao e a: %x", IR);
 
         A = A + B;
-        if(IR == 0) {
-            PC += 4;
-        }
+
+        PC += 4;
+
         LR = !LR;
 
     }
