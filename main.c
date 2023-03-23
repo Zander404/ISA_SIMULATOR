@@ -519,9 +519,10 @@ void executa() {
         printf("\nFAZENDO O LOAD A");
 
         printf("\n O valor da Flag e: %i", LR);
+        MAR = PC;
         if(LR == 0){
-            MAR = PC;
             MBR = MEMORIA[MAR];
+
             int i;
             for (i = 0; i < 2; i++) {
                 MBR = (MBR << 8) | MEMORIA[MAR++];
@@ -547,6 +548,7 @@ void executa() {
         printf("\nA instrucao e a: %x", IR);
         printf("\nFAZENDO O LOAD B");
         printf("\n O valor da Flag e: %i", LR);
+
         if(LR == 0){
             MAR = PC;
             MBR = MEMORIA[MAR];
@@ -563,9 +565,8 @@ void executa() {
             MAR = PC;
             MBR = MEMORIA[MAR];
 
-            MBR = IBR;
-
-            B = MBR;
+            MAR = IBR & maskstA;
+            B = MEMORIA[MAR];
 
             PC += 4;
         }
@@ -586,22 +587,14 @@ void executa() {
     }
     if (IR == stb) {
         printf("\nA instrucao e a: %x", IR);
+        MEMORIA[MAR] = (B & maskstA);
+        if(LR == 1){
+            PC += 4;
 
-        if(LR == 0){
-            MEMORIA[MAR++] = B >> 11;
-            MEMORIA[MAR] = (B & maskstA);
-            LR= !LR;
-        } else{
-            MAR++;
-            MAR++;
-            MEMORIA[MAR++] = IBR >> 11;
-            MEMORIA[MAR] = (IBR & maskstA);
-            LR= !LR;
         }
-        PC += 4;
+        LR= !LR;
 
     }
-
 
     //INSTRUCAO TIPO 1
     if (IR == ldrb) {
