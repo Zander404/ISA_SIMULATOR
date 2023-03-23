@@ -575,13 +575,11 @@ void executa() {
 
     if (IR == sta) {
         printf("\nA instrucao e a: %x", IR);
-        if(LR==0){
-            MEMORIA[MAR] = (A & 0xff);
+        MEMORIA[MAR] = (A & 0xff);
+        if(LR==1){
+            PC += 4;
         }
-        else{
-            MEMORIA[MAR] = (A & maskstA);
-            PC+=4;
-        }
+
         LR = !LR;
 
     }
@@ -776,13 +774,13 @@ int main() {
     MEMORIA[0x1e] = 0xa0;
     MEMORIA[0x1f] = 0x8e;
 
-//20;i;addia 1 / sta 8c ERRRRRO STA NA DIREITA
+//20;i;addia 1 / sta 8c ERRRRRO STA NA DIREITA (NO EXECUTA ????? MAR ERRADO PC = 32)
     MEMORIA[0x20] = 0xd0;
     MEMORIA[0x21] = 0x01;
     MEMORIA[0x22] = 0xa8;
     MEMORIA[0x23] = 0x8c;
 
-//24;i;cmp / jle 0
+//24;i;cmp / jle 0 ERRRO NO MBR FALTA UM VALOR HEXA DECIMAL
     MEMORIA[0x24] = 0x30;
     MEMORIA[0x25] = 0x00;
     MEMORIA[0x26] = 0x78;
