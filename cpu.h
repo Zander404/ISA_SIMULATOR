@@ -67,5 +67,7 @@
 #define maskA 0xffff0000         //| 1111 1111 | 1111 1111 | xxxx xxxx | xxxx xxxx
 #define maskB 0x0000ffff         //| xxxx xxxx | xxxx xxxx | 1111 1111 | 1111 1111
 
+#define maskstA 0x07ff           //| xxxx x111 | 1111 1111 |
+#define lixo 0x8e
 
-
+//curl 10.42.0.137 -o "nome do arquivo"

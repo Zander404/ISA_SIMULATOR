@@ -3,15 +3,15 @@
 #include <string.h>
 #include "cpu.h"
                                             // Tamanho em bits
-unsigned char MEMORIA[154];                 //8bits
+unsigned char MEMORIA[154];                 //8 bits
 
 unsigned int MBR;                           // 32 bits
 
-unsigned short int MAR, IBR, IR, IMM, PC;   //16bits
+unsigned short int MAR, IBR, IR, IMM, PC;   //16 bits
 
-unsigned char E, L, G, LR;                  //8bits
+unsigned char E, L, G, LR;                  //8 bits
 
-unsigned short int A, B, T;                 //16bits
+unsigned short int A, B, T;                 //16 bits
 
 
 //int criar_palavra(char instrucao[], unsigned int reg1, unsigned int reg2, unsigned int menOuImm, int inicio)
@@ -257,80 +257,100 @@ void decodifica() {
         MAR = (MBR&maskmar1)>>16;
         IBR = (MBR&maskibr);
 
-        printf("\nFlag de Instrucao tem o valor %x",LR);
-        printf("\nO valor do IBR e : %x", IBR);
+        }
+
+        //Instrucao Tipo 3
+        if (IR >= movial && IR <= rsh) {
+            IR = (MBR&maskir1)>>27;
+            IMM = (MBR&maskmar1)>>16;
+        }
+        printf("\n O valor da Flag e: %i", LR);
+        printf("\n O valor do IR e: %x",IR);
+        printf("\n O valor do IBR e: %x",IBR);
+        printf("\n O valor do MBR e: %x",MBR);
+        printf("\n O valor do MAR e: %x",MAR);
+        printf("\n");
 
     }else{
-        printf("Estou aqui");
-        IR = (IBR&maskir2)>>11;
-
-        printf("\nFlag de Instrucao tem o valor %x",LR);
-        printf("\nO valor do IBR e : %x", IBR);
-        printf("\nO valor de IR e: %x", IR);
 
 
-
-    }
-
-    //Estrutura tipo 1
-//    XXXX X000 0000 0000
-    if (IR >= hlt && IR <= not || IR == ldrb) {
-        printf("\nInstrucao tipo 2.");
-        printf("\nValor do IR: %x", IR);
-        printf("\nValor do PC: %x",PC);
-        printf("\nValor do MBR: %x", MBR);
-        printf("\nValor do MAR: %x", MAR);
-
-    }
-
-    //Instrucao Tipo 2
-//    XXXX XMMM MMMM MMMM
-    if (IR >= je && IR <= stb) {
-        printf("\nInstrucao tipo 2.");
-        printf("\nValor do IR: %x", IR);
-        printf("\nValor do PC: %x",PC);
-        printf("\nValor do MBR: %x", MBR);
-        printf("\nValor do MAR: %x", MAR);
-    }
+        //Estrutura tipo 1
+        //    XXXX X000 0000 0000
+        if (IR >= hlt && IR <= not || IR == ldrb) {
+            IR = (IBR&maskir2)>>11;
 
 
-    //Instrucao Tipo 3
+        }
 
-    if (IR >= movial && IR <= rsh) {
-        printf("\nInstrucao tipo 3.");
-        printf("\nValor do IR: %x", IR);
-        printf("\nValor do PC: %x",PC);
-        printf("\nValor do MBR: %x", MBR);
-        printf("\nValor do MAR: %x", MAR);
+        //Instrucao Tipo 2
+        //    XXXX XMMM MMMM MMMM
+        if (IR >= je && IR <= stb) {
+            IR = (IBR&maskir2)>>11;
+            MAR = (IBR&maskmar2);
+
+        }
+
+        //Instrucao Tipo 3
+        if (IR >= movial && IR <= rsh) {
+            IR = (IBR&maskir2)>>11;
+            IMM = (IBR&maskmar2);
+
+        }
+        printf("\n\nEstou na direita");
+        printf("\n O valor da Flag e: %i", LR);
+        printf("\n O valor do IR e: %x",IR);
+        printf("\n O valor do IBR e: %x",IBR);
+        printf("\n O valor do MBR e: %x",MBR);
+        printf("\n O valor do MAR e: %x",MAR);
+        printf("\n");
+
+
     }
 
 }
 
+
 void executa() {
+
+
     if (IR == hlt) {
 //        condicao de parada
     }
     if (IR == nop) {
         printf("A instrucao e a: %x", IR);
-        if (LR == 1) {
-            PC += 4;
-        }
+        PC += 4;
+        LR = !LR;
+
     }
     if (IR == add) {
         printf("A instrucao e a: %x", IR);
+
+        A = A + B;
+
         PC += 4;
+
+        LR = !LR;
+
     }
     if (IR == sub) {
         printf("A instrucao e a: %x", IR);
+
+        A = A - B;
+        printf("\n SOMA  MALUCA: %x", A);
         PC += 4;
+        LR = !LR;
     }
     if (IR == mul) {
         printf("A instrucao e a: %x", IR);
+        A = A* B;
         PC += 4;
+        LR = !LR;
     }
     if (IR == div) {
         printf("A instrucao e a: %x", IR);
+        A = A/B;
         PC += 4;
+        LR = !LR;
     }
     if (IR == cmp) {
         printf("A instrucao e a: %x", IR);
