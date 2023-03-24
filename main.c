@@ -268,6 +268,8 @@ void decodifica() {
             IR = (MBR&maskir1)>>27;
             MAR = (MBR&maskmar1)>>16;
 
+
+
         }
 
         //Instrucao Tipo 3
@@ -292,13 +294,16 @@ void decodifica() {
             IR = (IBR&maskir2)>>11;
 
 
+
         }
 
         //Instrucao Tipo 2
         //    XXXX XMMM MMMM MMMM
         if (IR >= je && IR <= stb) {
             IR = (IBR&maskir2)>>11;
+            printf("\t\t\t\t VALOR DO IBR %x", IBR);
             MAR = (IBR&maskmar2);
+            printf("\t\t\t\t VALOR DO MAR: %x",MAR );
 
         }
 
@@ -306,6 +311,7 @@ void decodifica() {
         if (IR >= movial && IR <= rsh) {
             IR = (IBR&maskir2)>>11;
             IMM = (IBR&maskmar2);
+
 
         }
         printf("\n\nEstou na direita");
@@ -674,7 +680,7 @@ void executa() {
 
 int main() {
 
-//    0;i;lda 96/ldb 98
+////    0;i;lda 96/ldb 98
 //    MEMORIA[0x00] = 0x98;
 //    MEMORIA[0x01] = 0x96;
 //    MEMORIA[0x02] = 0xa0;
@@ -723,7 +729,7 @@ int main() {
 //
 ////    98;d;3
 //    MEMORIA[0x98] = 0x03;
-//REPOSTA 38 OU 0X28
+////REPOSTA 38 OU 0X26
 
 
 //    0;i;lda 90 / ldb 92 OKKKKKK
