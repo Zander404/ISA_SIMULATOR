@@ -484,7 +484,7 @@ void executa() {
     }
     if (IR == jle) {
         printf("\nA instrucao e a: %x", IR);
-        printf("\nSOU O JUMP JLE");
+
         if (E == 1 | L == 1) {
             LR = 0;
             PC = MAR;
