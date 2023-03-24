@@ -261,18 +261,13 @@ void decodifica() {
         printf("\n\nEstou na esquerda");
 
 
-        //Instrucao Tipo 2
-        //    XXXX XMMM MMMM MMMM
-        if(IR >= hlt && IR<=not){
-            MAR=0;
-        }
-        if (IR >= je && IR <= stb) {
+        //Instrucao Tipo 1 & 2
+        if (IR >= hlt && IR <= stb) {
             MAR = (MBR&maskmar1)>>16;
-
         }
 
         //Instrucao Tipo 3
-        if (IR >= movial && IR <= rsh) {
+        else if (IR >= movial && IR <= rsh) {
             IMM = (MBR&maskmar1)>>16;
 
 
@@ -288,14 +283,17 @@ void decodifica() {
 
     }else{
         IR = (IBR&maskir2)>>11;
-        //Instrucao Tipo 2
-        //    XXXX XMMM MMMM MMMM
-        if (IR >= je && IR <= stb) {
+
+//        if(IR >= hlt && IR<=not){
+//            MAR = 0;
+//        }
+        //Instrucao Tipo 1 & 2
+        if (IR >= hlt && IR <= stb) {
             MAR = IBR&0x007ff;
         }
 
         //Instrucao Tipo 3
-        if (IR >= movial && IR <= rsh) {
+        else if (IR >= movial && IR <= rsh) {
 
             IMM = (IBR&maskmar2);
 
