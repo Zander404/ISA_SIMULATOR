@@ -244,11 +244,6 @@ void busca() {
     for (i = 0; i < 3; i++) {
         MBR = (MBR << 8) | MEMORIA[MAR++];
     };
-    if(LR==0){
-        IR = MBR<<27;
-    }else{
-        IR = (MBR&0x0000f800);
-    }
 
     printf("%x", MBR);
 
@@ -256,31 +251,30 @@ void busca() {
 
 
 void decodifica() {
-    printf("\n\t\t\t\t\t INSTRUCAO DO MAL: %x", IR);
+
 
     if(LR == 0){
         IBR = (MBR&maskibr);
+        IR = (MBR&maskir1)>>27;
+        printf("\n\t\t\t\t\t INSTRUCAO DO MAL: %x", IR);
 
         printf("\n\nEstou na esquerda");
-        //Estrutura tipo 1
-        //    XXXX X000 0000 0000
-        if (IR >= hlt && IR <= not || IR == ldrb) {
-            IR = (MBR&maskir1)>>27;
-        }
+
 
         //Instrucao Tipo 2
         //    XXXX XMMM MMMM MMMM
+        if(IR >= hlt && IR<=not){
+            MAR=0;
+        }
         if (IR >= je && IR <= stb) {
-            IR = (MBR&maskir1)>>27;
             MAR = (MBR&maskmar1)>>16;
 
         }
 
         //Instrucao Tipo 3
         if (IR >= movial && IR <= rsh) {
-            IR = (MBR&maskir1)>>27;
-            printf("\n\t\t\t\t\t\t\tMAMA");
             IMM = (MBR&maskmar1)>>16;
+
 
 
         }
@@ -293,33 +287,18 @@ void decodifica() {
         printf("\n");
 
     }else{
-
-
-        //Estrutura tipo 1
-        //    XXXX X000 0000 0000
-        if (IR >= hlt && IR <= not || IR == ldrb) {
-            IR = (IBR&maskir2)>>11;
-
-
-
-        }
-        printf("\n\n\n IR ANTES DA MERDA %i %x \n\n\n\n", IR,IR);
+        IR = (IBR&maskir2)>>11;
         //Instrucao Tipo 2
         //    XXXX XMMM MMMM MMMM
         if (IR >= je && IR <= stb) {
-            IR = (IBR&maskir2)>>11;
-            printf("\t\t\t\t VALOR DO IBR %x", IBR);
-            printf("\nESTOU NA DIREITA");
-            MAR = IBR&0x00007ff;
-            printf("\t\t\t\t VALOR DO MAR: %x",MAR );
-
+            MAR = IBR&0x007ff;
         }
 
         //Instrucao Tipo 3
         if (IR >= movial && IR <= rsh) {
-            IR = (IBR&maskir2)>>11;
-            printf("\n\t\t\t\t\t\t\tSEM MODER");
+
             IMM = (IBR&maskmar2);
+
 
         }
         printf("\n\nEstou na direita");
@@ -391,7 +370,7 @@ void executa() {
     }
     if (IR == cmp) {
         printf("A instrucao e a: %x", IR);
-        printf("\t\t\t\t\t O valor do MBR errado:", MBR);
+        printf("\t\t\t\t\t O valor do MBR errado: %x", MBR);
         if (A == B) {
             E = 1;
         } else {
@@ -409,12 +388,14 @@ void executa() {
         } else {
             G = 0;
         }
+        printf("VALOR DE E: %x \n VALOR DE L: %x \n VALOR DE G: %x", E,L,G);
 
         if(LR==1){
             PC += 4;
         }
         LR = !LR;
     }
+
     if (IR == xchg) {
         printf("A instrucao e a: %x", IR);
 
@@ -536,7 +517,7 @@ void executa() {
         printf("\nA instrucao e a: %x", IR);
         printf("\nFAZENDO O LOAD A");
 
-        printf("\n O valor da Flag e: %i", LR);
+
         MAR = PC;
         if(LR == 0){
             MBR = MEMORIA[MAR];
@@ -575,10 +556,8 @@ void executa() {
                 MBR = (MBR << 8) | MEMORIA[MAR++];
             };
             MAR = MBR & maskstA;
-
-            printf("\n\n\n\t\t\t\t MAR: %x", MAR);
             B = MEMORIA[MAR];
-            printf("\n\n\n\t\t\t\t B: %x",B);
+
         }else{
             MAR = PC;
             MBR = MEMORIA[MAR];
@@ -595,12 +574,12 @@ void executa() {
         printf("\nA instrucao e a: %x", IR);
 
         if(LR==0){
-            MEMORIA[MAR++] = (A & 0xff00) >> 8;
+//            MEMORIA[MAR++] = (A & 0xff00) >> 8;
             MEMORIA[MAR] = (A & 0x00ff);
 
         } else{
 
-            MEMORIA[MAR++] = (A & 0xff00) >> 8;
+//            MEMORIA[MAR++] = (A & 0xff00) >> 8;
             MEMORIA[MAR] = (A & 0x00ff);
 
             PC += 4;
@@ -614,7 +593,7 @@ void executa() {
         MEMORIA[MAR] = (B & maskstA);
         if(LR == 1){
 //            MEMORIA[MAR+0x2] = B & 0xff00;
-//            MEMORIA[MAR+0x3] = B & 0x00ff;
+            MEMORIA[MAR] = B & 0x00ff;
 
             PC += 4;
 
@@ -753,7 +732,7 @@ int main() {
 //
 ////    98;d;3
 //    MEMORIA[0x98] = 0x03;
-////REPOSTA 38 OU 0X26
+//REPOSTA 38 OU 0X26
 
 
 //    0;i;lda 90 / ldb 92 OKKKKKK
@@ -837,16 +816,10 @@ int main() {
     //lerTexto();
     PC = 0;
     MAR = 0;
-    IR=1;
+    IR=-1;
 
 
-//    busca();
-//    decodifica();
-//    executa();
-//    printf("\n O valor da Flag e: %i", LR);
 
-
-//testinho();
     while(IR!=0){
         busca();
         decodifica();
