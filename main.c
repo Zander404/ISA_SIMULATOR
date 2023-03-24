@@ -238,17 +238,25 @@ unsigned short int A, B, T;                 //16 bits
 
 void busca() {
     MAR = PC;
-    MBR = MEMORIA[MAR];
+    MBR = MEMORIA[MAR++];
 
     int i;
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < 3; i++) {
         MBR = (MBR << 8) | MEMORIA[MAR++];
     };
+    if(LR==0){
+        IR = MBR<<27;
+    }else{
+        IR = (MBR&0x0000f800);
+    }
+
+    printf("%x", MBR);
 
 }
 
 
 void decodifica() {
+    printf("\n\t\t\t\t\t INSTRUCAO DO MAL: %x", IR);
 
     if(LR == 0){
         IBR = (MBR&maskibr);
@@ -258,8 +266,6 @@ void decodifica() {
         //    XXXX X000 0000 0000
         if (IR >= hlt && IR <= not || IR == ldrb) {
             IR = (MBR&maskir1)>>27;
-
-
         }
 
         //Instrucao Tipo 2
@@ -268,17 +274,18 @@ void decodifica() {
             IR = (MBR&maskir1)>>27;
             MAR = (MBR&maskmar1)>>16;
 
-
-
         }
 
         //Instrucao Tipo 3
         if (IR >= movial && IR <= rsh) {
             IR = (MBR&maskir1)>>27;
+            printf("\n\t\t\t\t\t\t\tMAMA");
             IMM = (MBR&maskmar1)>>16;
+
+
         }
         printf("\n O valor da Flag e: %i", LR);
-        printf("\n\n\t\t O VALOR DE PC: %i",PC);
+        printf("\n\n\t\t O VALOR DE PC: %x",PC);
         printf("\n O valor do IR e: %x",IR);
         printf("\n O valor do IBR e: %x",IBR);
         printf("\n O valor do MBR e: %x",MBR);
@@ -296,13 +303,14 @@ void decodifica() {
 
 
         }
-
+        printf("\n\n\n IR ANTES DA MERDA %i %x \n\n\n\n", IR,IR);
         //Instrucao Tipo 2
         //    XXXX XMMM MMMM MMMM
         if (IR >= je && IR <= stb) {
             IR = (IBR&maskir2)>>11;
             printf("\t\t\t\t VALOR DO IBR %x", IBR);
-            MAR = (IBR&maskmar2);
+            printf("\nESTOU NA DIREITA");
+            MAR = IBR&0x00007ff;
             printf("\t\t\t\t VALOR DO MAR: %x",MAR );
 
         }
@@ -310,17 +318,18 @@ void decodifica() {
         //Instrucao Tipo 3
         if (IR >= movial && IR <= rsh) {
             IR = (IBR&maskir2)>>11;
+            printf("\n\t\t\t\t\t\t\tSEM MODER");
             IMM = (IBR&maskmar2);
-
 
         }
         printf("\n\nEstou na direita");
         printf("\n O valor da Flag e: %i", LR);
-        printf("\n\n\t\t O VALOR DE PC: %i",PC);
+        printf("\n\n\t\t O VALOR DE PC: %x",PC);
         printf("\n O valor do IR e: %x",IR);
         printf("\n O valor do IBR e: %x",IBR);
         printf("\n O valor do MBR e: %x",MBR);
         printf("\n O valor do MAR e: %x",MAR);
+        printf("\n O valor d o IMM e: %x", IMM);
         printf("\n");
 
 
@@ -382,16 +391,19 @@ void executa() {
     }
     if (IR == cmp) {
         printf("A instrucao e a: %x", IR);
+        printf("\t\t\t\t\t O valor do MBR errado:", MBR);
         if (A == B) {
             E = 1;
         } else {
             E = 0;
         }
+
         if (A < B) {
             L = 1;
         } else {
             L = 0;
         }
+
         if (A > B) {
             G = 1;
         } else {
@@ -581,8 +593,16 @@ void executa() {
 
     if (IR == sta) {
         printf("\nA instrucao e a: %x", IR);
-        MEMORIA[MAR] = (A & 0xff);
-        if(LR==1){
+
+        if(LR==0){
+            MEMORIA[MAR++] = (A & 0xff00) >> 8;
+            MEMORIA[MAR] = (A & 0x00ff);
+
+        } else{
+
+            MEMORIA[MAR++] = (A & 0xff00) >> 8;
+            MEMORIA[MAR] = (A & 0x00ff);
+
             PC += 4;
         }
 
@@ -593,6 +613,9 @@ void executa() {
         printf("\nA instrucao e a: %x", IR);
         MEMORIA[MAR] = (B & maskstA);
         if(LR == 1){
+//            MEMORIA[MAR+0x2] = B & 0xff00;
+//            MEMORIA[MAR+0x3] = B & 0x00ff;
+
             PC += 4;
 
         }
@@ -630,6 +653,7 @@ void executa() {
     if (IR == addia) {
         printf("\nA instrucao e a: %x", IR);
         A = A + IMM;
+        printf("\n\n\n A no addia = %x %i",A, A);
         if(LR==1){
             PC += 4;
         }
@@ -780,13 +804,13 @@ int main() {
     MEMORIA[0x1e] = 0xa0;
     MEMORIA[0x1f] = 0x8e;
 
-//20;i;addia 1 / sta 8c ERRRRRO STA NA DIREITA (NO EXECUTA ????? MAR ERRADO PC = 32)
-    MEMORIA[0x20] = 0xd0;
+//20;i;addia 1 / sta 8c ERRO ELE NAO COLOCA O VALOR DE MAR PARA A INSTRUCAO DA DIREITA LINHA 305
+    MEMORIA[0x20] = 0xd0; //ELE LE O DECODIFICA DE ADDI 2 VEZES
     MEMORIA[0x21] = 0x01;
     MEMORIA[0x22] = 0xa8;
     MEMORIA[0x23] = 0x8c;
 
-//24;i;cmp / jle 0 ERRRO NO MBR FALTA UM VALOR HEXA DECIMAL
+//24;i;cmp / jle 0 ERRRO NO MBR FALTA UM VALOR HEXA DECIMAL 0011 0000 0111 1000 0000 0000
     MEMORIA[0x24] = 0x30;
     MEMORIA[0x25] = 0x00;
     MEMORIA[0x26] = 0x78;
