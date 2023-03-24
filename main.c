@@ -319,6 +319,7 @@ void decodifica() {
 
 void executa() {
 
+    printf("\nTESTE DO CARALHO\t\t\t\t\t\t IR: %x", IR);
 
     if (IR == hlt) {
 //        condicao de parada
@@ -370,7 +371,7 @@ void executa() {
     }
     if (IR == cmp) {
         printf("A instrucao e a: %x", IR);
-        printf("\t\t\t\t\t O valor do MBR errado: %x", MBR);
+
         if (A == B) {
             E = 1;
         } else {
@@ -388,7 +389,7 @@ void executa() {
         } else {
             G = 0;
         }
-        printf("VALOR DE E: %x \n VALOR DE L: %x \n VALOR DE G: %x", E,L,G);
+        printf("\nVALOR DE E: %x \n VALOR DE L: %x \n VALOR DE G: %x", E,L,G);
 
         if(LR==1){
             PC += 4;
@@ -453,6 +454,7 @@ void executa() {
     if (IR == je) {
         printf("\nA instrucao e a: %x", IR);
         if (E == 1) {
+            LR = 0;
             PC = MAR;
         } else {
             LR = 0;
@@ -462,9 +464,10 @@ void executa() {
     if (IR == jne) {
         printf("\nA instrucao e a: %x", IR);
         if (E == 0) {
+            LR = 0;
             PC = MAR;
         } else {
-            LR = 0;
+            LR = !LR;
             PC += 4;
         }
 
@@ -472,27 +475,32 @@ void executa() {
     if (IR == jl) {
         printf("\nA instrucao e a: %x", IR);
         if (L == 1) {
+            LR=0;
             PC = MAR;
         } else {
-            LR = 0;
+            LR = !LR;
             PC += 4;
         }
     }
     if (IR == jle) {
         printf("\nA instrucao e a: %x", IR);
+        printf("\nSOU O JUMP JLE");
         if (E == 1 | L == 1) {
+            LR = 0;
             PC = MAR;
         } else {
-            LR = 0;
+            LR = !LR;
             PC += 4;
         }
     }
     if (IR == jg) {
         printf("\nA instrucao e a: %x", IR);
+
         if (G == 1) {
+            LR = 0;
             PC = MAR;
         } else {
-            LR = 0;
+            LR = !LR;
             PC += 4;
         }
     }
@@ -500,9 +508,10 @@ void executa() {
     if (IR == jge) {
         printf("\nA instrucao e a: %x", IR);
         if (E == 1 | G == 1) {
+            LR = 0;
             PC = MAR;
         } else {
-            LR = 0;
+            LR = !LR;
             PC += 4;
         }
     }
@@ -789,7 +798,7 @@ int main() {
     MEMORIA[0x22] = 0xa8;
     MEMORIA[0x23] = 0x8c;
 
-//24;i;cmp / jle 0 ERRRO NO MBR FALTA UM VALOR HEXA DECIMAL 0011 0000 0111 1000 0000 0000
+//24;i;cmp / jle 0
     MEMORIA[0x24] = 0x30;
     MEMORIA[0x25] = 0x00;
     MEMORIA[0x26] = 0x78;
@@ -812,7 +821,7 @@ int main() {
     MEMORIA[0x92] = 0x05;
 
 
-    // NA POSICAO: 0x8c  RESPOSTA 50 OU 0X32
+    // NA POSICAO: 0x8a  RESPOSTA 50 OU 0X32
     //lerTexto();
     PC = 0;
     MAR = 0;

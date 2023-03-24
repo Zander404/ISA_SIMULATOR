@@ -7,7 +7,7 @@
 #define mul 0b00100     //0x20  //0x04
 #define div 0b00101     //0x28  //0x05
 
-#define cmp 0b001100    //0x30  //0x06
+#define cmp 0b000110    //0x30  //0x06
 #define xchg 0b00111    //0x38  //0x07
 
 #define and 0b01000     //0x40  //0x08
