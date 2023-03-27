@@ -1,3 +1,0 @@
-C:/Users/alexa/CLionProjects/ISA_SIMULATOR/cmake-build-debug/CMakeFiles/ISA_SIMULATOR.dir
-C:/Users/alexa/CLionProjects/ISA_SIMULATOR/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/alexa/CLionProjects/ISA_SIMULATOR/cmake-build-debug/CMakeFiles/rebuild_cache.dir

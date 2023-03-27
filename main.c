@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 #include "cpu.h"
+
+// Caso for necessario compilar na mão use os seguintes comandos
+//Compilar      gcc -o main main.c
+//Executar      ./main
+
                                             // Tamanho em bits
 unsigned char MEMORIA[154];                 //8 bits
 
@@ -134,7 +139,8 @@ unsigned short int A, B, T;                 //16 bits
 //
 //    return palavra;
 //}
-////
+//
+
 //void lerTexto()
 //{
 //    FILE *arq;
@@ -234,8 +240,8 @@ unsigned short int A, B, T;                 //16 bits
 //    }
 //    fclose(arq);
 //}
-
-
+//
+//
 void busca() {
     MAR = PC;
     MBR = MEMORIA[MAR++];
@@ -824,6 +830,7 @@ int main() {
     PC = 0;
     MAR = 0;
     IR=-1;
+
 
 
 
