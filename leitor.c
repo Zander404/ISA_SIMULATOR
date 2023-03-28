@@ -1,7 +1,7 @@
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <string.h>
-//#include "cpu.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "cpu.h"
 //
 //
 //unsigned short int fazer_palavra_16Bits (char instrucao[], unsigned int menOuImm) {
@@ -236,3 +236,35 @@
 //    }
 //    fclose(arq);
 //}
+
+int main(){
+    FILE *arq;
+    char *pl;         //indices das instrucoes
+    char str[50];
+    int count;        //Variavel de controle da leitura
+    int inicio;
+    char tipo;
+
+    arq = fopen("instrucoes.txt", "r");
+    if (NULL == arq) {
+        printf("Arquivo instrucoes.txt nao encontrado \n");
+    }else{
+        while (fgets(str, 50, arq) != NULL) {
+            pl= strtok(str, ";");
+            printf("\n%s",pl);
+
+            while(count<3){
+                if(count==0){
+                    inicio = (int) strtol(pl,NULL,16); //comeco da leitura
+                    printf("\n\n%i", inicio);
+                } else if(count == 1){
+                    tipo = *pl;
+                    printf("%c",tipo);
+            }
+
+        }
+    }
+    }
+
+
+}
