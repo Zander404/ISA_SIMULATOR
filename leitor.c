@@ -241,30 +241,52 @@ int main(){
     FILE *arq;
     char *pl;         //indices das instrucoes
     char str[50];
-    int count;        //Variavel de controle da leitura
-    int inicio;
-    char tipo;
+    int count=0;        //Variavel de controle da leitura
+    int indice=0;
+    char tipo=0;
+    unsigned char MEMORIA[154];                 //8 bits
 
     arq = fopen("instrucoes.txt", "r");
     if (NULL == arq) {
         printf("Arquivo instrucoes.txt nao encontrado \n");
     }else{
         while (fgets(str, 50, arq) != NULL) {
-            pl= strtok(str, ";");
-            printf("\n%s",pl);
+            pl= strtok(str, ";"); //Peguei o indice de posicao da memoria
+//            printf("\n%s",pl);
 
             while(count<3){
+
                 if(count==0){
-                    inicio = (int) strtol(pl,NULL,16); //comeco da leitura
-                    printf("\n\n%i", inicio);
-                } else if(count == 1){
+                    indice = (int) strtol(pl,NULL,16); //comeco da leitura
+                    printf("\n\n%i", indice);
+
+//                    printf("%i", count);
+                }else if(count == 1){
+                    pl = strtok(NULL,";"); //Peguei o tipo de dado i ou d
                     tipo = *pl;
-                    printf("%c",tipo);
+                    printf("\t\t\t\t\t\t TIPO DE DADO: %c\n", tipo);
+
+
+                    pl = strtok(NULL,";"); //Peguei as 2 instrucoes
+                    printf("\t\t\t\t\t\t Print das 2 instrucoes: %s\n", pl);
+
+
+                    pl = strtok(pl,"/"); //peguei a instrucao da Direita
+                    printf("\t\t\t\t\t\t 1 intrucao: %s\n", pl);
+
+
+                    pl = strtok(NULL,"/"); //peguei a instrucao da esquerda
+                    printf("\t\t\t\t\t\t 2 instrucao: %s\n", pl);
+
+
+
+                }
+                count++;
             }
+            count=0;
+
 
         }
     }
-    }
-
 
 }
