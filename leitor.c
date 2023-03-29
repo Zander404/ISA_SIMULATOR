@@ -1,7 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include "cpu.h"
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <string.h>
+//#include "cpu.h"
 //
 //
 //unsigned short int fazer_palavra_16Bits (char instrucao[], unsigned int menOuImm) {
@@ -237,22 +237,37 @@
 //    fclose(arq);
 //}
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "cpu.h"
+
+void getInstrucao(unsigned int indice, unsigned char instrucao, unsigned char flagLR){
+//    printf("indice:%i \n instrucao:%s \n flagLR: %i", indice,instrucao,flagLR);
+
+}
+
 int main(){
     FILE *arq;
-    char *pl;         //indices das instrucoes
+    unsigned char *pl;         //indices das instrucoes
     char str[50];
-    int count=0;        //Variavel de controle da leitura
-    int indice=0;
-    char tipo=0;
+
+    unsigned int indice=0;
+    unsigned char tipo=0;
+    unsigned short int instucao_direita;        //16 bits
+    unsigned short int instrucao_esquerda;      //16 bits
+    unsigned char flagLR = 0;                       //8 bits / mas apenas 2 bits
     unsigned char MEMORIA[154];                 //8 bits
+
+    int count=0;        //Variavel de controle da leitura
+
 
     arq = fopen("instrucoes.txt", "r");
     if (NULL == arq) {
         printf("Arquivo instrucoes.txt nao encontrado \n");
     }else{
         while (fgets(str, 50, arq) != NULL) {
-            pl= strtok(str, ";"); //Peguei o indice de posicao da memoria
-//            printf("\n%s",pl);
+            pl = strtok(str, ";"); //Peguei o indice de posicao da memoria
 
             while(count<3){
 
@@ -260,11 +275,12 @@ int main(){
                     indice = (int) strtol(pl,NULL,16); //comeco da leitura
                     printf("\n\n%i", indice);
 
-//                    printf("%i", count);
+//
                 }else if(count == 1){
                     pl = strtok(NULL,";"); //Peguei o tipo de dado i ou d
                     tipo = *pl;
                     printf("\t\t\t\t\t\t TIPO DE DADO: %c\n", tipo);
+
 
 
                     pl = strtok(NULL,";"); //Peguei as 2 instrucoes
@@ -273,10 +289,19 @@ int main(){
 
                     pl = strtok(pl,"/"); //peguei a instrucao da Direita
                     printf("\t\t\t\t\t\t 1 intrucao: %s\n", pl);
-
+//                    Fazer um conjunto de ifs fudidos
+//                    Ou fazer uma funcao com uam flag de controle
+;                     getInstrucao(indice,*pl,flagLR);
 
                     pl = strtok(NULL,"/"); //peguei a instrucao da esquerda
                     printf("\t\t\t\t\t\t 2 instrucao: %s\n", pl);
+//                     Fazer um conjunto de ifs fudidos
+//                     Ou fazer uma funcao com uma flag de controle
+//                     getInstrucao(indice,pl,flagLR);
+
+
+                    MEMORIA[1] = *pl;
+                    printf("Suco: %i",MEMORIA[1]);
 
 
 
