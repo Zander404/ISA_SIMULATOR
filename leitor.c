@@ -237,6 +237,202 @@
 //    fclose(arq);
 //}
 
+void colocarInstru(int mem){
+    unsigned char *ponteiro, rg0, mine[8]; // aux recebe rg0
+    unsigned int count = 0, imediatoMem, palavra;
+
+    ponteiro = strtok(pt," ,");
+    while(ponteiro){
+        if(count == 0){
+            strcpy(mine,ponteiro);
+        }
+        if (count== 1){
+            rg0 = (int)strtol(ponteiro,NULL,16);
+        }
+        if(count == 2){
+            imediatoMem = (int)strtol(ponteiro,NULL,16);
+        }
+        ponteiro = strtok(NULL," ,r");
+        count++;
+    }
+    if(strcmp(mine,"nop")== 0) {
+        palavra = 1;
+        palavra = palavra << 24;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"add")== 0){
+        palavra = 2;
+        palavra = (palavra << 3) |rg0;
+        palavra = (palavra << 3) | imediatoMem;
+        palavra =  palavra << 18;
+        guardarMemoria(mem,palavra);
+    } else if(strcmp(mine,"sub")== 0) {
+        palavra = 3;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 3) | imediatoMem;
+        palavra = palavra << 18;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"mul")== 0) {
+        palavra = 4;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 3) | imediatoMem;
+        palavra = palavra << 18;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"div")== 0) {
+        palavra = 5;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 3) | imediatoMem;
+        palavra = palavra << 18;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"cmp")== 0) {
+        palavra = 6;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 3) | imediatoMem;
+        palavra = palavra << 18;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"movr")== 0) {
+        palavra = 7;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 3) | imediatoMem;
+        palavra = palavra << 18;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"and")== 0) {
+        palavra = 8;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 3) | imediatoMem;
+        palavra = palavra << 18;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"or")== 0) {
+        palavra = 9;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 3) | imediatoMem;
+        palavra = palavra << 18;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"xor")== 0) {
+        palavra = 10;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 3) | imediatoMem;
+        palavra = palavra << 18;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"not")== 0) {
+        palavra = 11;
+        palavra = ((palavra << 3)|rg0)<<21;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"je")== 0) {
+        palavra = 12;
+        palavra = (palavra << 24)| imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"jne")== 0) {
+        palavra = 13;
+        palavra = (palavra << 24)| imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"jl")== 0) {
+        palavra = 14;
+        palavra = (palavra << 24)| imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"jle")== 0) {
+        palavra = 15;
+        palavra = (palavra << 24)| imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"jg")== 0) {
+        palavra = 16;
+        palavra = (palavra << 24)| imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"jge")== 0) {
+        palavra = 17;
+        palavra = (palavra << 24)| imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"jmp")== 0) {
+        palavra = 18;
+        palavra = (palavra << 24)| imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"ld")== 0){
+        palavra = 19;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 21)| imediatoMem;
+        guardarMemoria(mem,palavra);
+    } else if(strcmp(mine,"st")== 0){
+        palavra = 20;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 21)| imediatoMem;
+        guardarMemoria(mem,palavra);
+    } else if(strcmp(mine,"movi")== 0) {
+        palavra = 21;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 21) | imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"addi")== 0) {
+        palavra = 22;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 21) | imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"subi")== 0) {
+        palavra = 23;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 21) | imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"muli")== 0) {
+        palavra = 24;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 21) | imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"divi")== 0) {
+        palavra = 25;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 21) | imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"lsh")== 0) {
+        palavra = 26;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 21) | imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else if(strcmp(mine,"rsh")== 0) {
+        palavra = 27;
+        palavra = (palavra << 3) | rg0;
+        palavra = (palavra << 21) | imediatoMem;
+        guardarMemoria(mem, palavra);
+    } else{
+        palavra  = 0;
+        guardarMemoria(mem,palavra);
+    }
+}
+
+
+void lerArquivo(){
+
+    unsigned int mem, valor;
+    FILE *arq;
+    unsigned char tipo, linha[99];
+    unsigned int count = 0;
+    arq = fopen("programa.txt", "r");
+
+    while (fgets(linha, 99, arq) != NULL){
+        pt = strtok(linha, "; ");
+        mem = (int)strtol(pt,NULL,16);
+        while(pt){
+            if(count == 1){
+                tipo = *pt;
+            }else if(count == 2){
+                if(tipo == 0x64){
+                    valor = (int)strtol(pt,NULL,16);
+                    memoria[mem++] = (valor & 0xff000000) >> 24;
+                    memoria[mem++] = (valor & 0x00ff0000) >> 16;
+                    memoria[mem++] = (valor & 0x0000ff00) >> 8;
+                    memoria[mem]   = (valor & 0x000000ff);
+                }else{
+                    colocarInstru(mem);
+                }
+            }
+
+            pt = strtok(NULL ,";");
+            count++;
+        }
+        count = 0;
+    }
+
+    if (NULL == arq)
+        printf("Erro ao tentar abrir programa.txt \n");
+    fclose(arq);
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -249,17 +445,19 @@ void getInstrucao(unsigned int indice, unsigned char instrucao, unsigned char fl
 
 int main(){
     FILE *arq;
-    unsigned char *pl;         //indices das instrucoes
+    unsigned char *pl, *charc;         //indices das instrucoes
     char str[50];
 
     unsigned int indice=0;
-    unsigned char tipo=0;
-    unsigned short int instucao_direita;        //16 bits
-    unsigned short int instrucao_esquerda;      //16 bits
+    unsigned char tipo=0;                       //8 bits
+    unsigned short int instrucao_direita;        //16 bits
+    unsigned char instrucao_esquerda[8];      //16 bits
     unsigned char flagLR = 0;                       //8 bits / mas apenas 2 bits
     unsigned char MEMORIA[154];                 //8 bits
+    unsigned short int temp =0;                 //PC
 
     int count=0;        //Variavel de controle da leitura
+
 
 
     arq = fopen("instrucoes.txt", "r");
@@ -268,18 +466,52 @@ int main(){
     }else{
         while (fgets(str, 50, arq) != NULL) {
             pl = strtok(str, ";"); //Peguei o indice de posicao da memoria
+            charc = strtol()
 
             while(count<3){
 
                 if(count==0){
                     indice = (int) strtol(pl,NULL,16); //comeco da leitura
-                    printf("\n\n%i", indice);
+
 
 //
                 }else if(count == 1){
                     pl = strtok(NULL,";"); //Peguei o tipo de dado i ou d
                     tipo = *pl;
                     printf("\t\t\t\t\t\t TIPO DE DADO: %c\n", tipo);
+                    if(tipo == 0x69){
+                        pl = strtok(NULL,";"); //Peguei as 2 instrucoes
+                        printf("\t\t\t\t\t\t Print das 2 instrucoes: %s\n", pl);
+
+
+                        pl = strtok(pl,"/"); //peguei a instrucao da Direita
+                        printf("\t\t\t\t\t\t 1 intrucao: %s\n", pl);
+//                        instrucao_esquerda = *pl;
+                        getInstrucao(indice,pl);
+
+
+//                        MEMORIA[temp++] = 0;
+//                        MEMORIA[temp] = 0;
+
+
+                        pl = strtok(NULL,"/"); //peguei a instrucao da esquerda
+                        instrucao_direita = *pl;
+                        printf("\t\t\t\t\t\t 2 instrucao: %s\n", pl);
+//                        instrucao_esquerda = *pl;
+//                     Fazer um conjunto de ifs fudidos
+//                     Ou fazer uma funcao com uma flag de controle
+//                     getInstrucao(indice,pl,flagLR);
+                        getInstrucao(indice,pl);
+
+
+                    }else if (tipo == 0x64){
+                        pl = strtok(NULL,";"); //Peguei as 2 instrucoes
+                        printf("\t\t\t\t\t\t Print do dado: %s\n", pl);
+                    }else{
+                        printf("\n\t\t\t\t\tDado invalido\n\nEncerrando programa ...\n\n\n");
+                        return 0;
+                    }
+
 
 
 
@@ -301,7 +533,7 @@ int main(){
 
 
                     MEMORIA[1] = *pl;
-                    printf("Suco: %i",MEMORIA[1]);
+
 
 
 
