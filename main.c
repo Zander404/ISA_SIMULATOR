@@ -40,10 +40,6 @@ void decodifica() {
     if(LR == 0){
         IBR = (MBR&maskibr);
         IR = (MBR&maskir1)>>27;
-        printf("\n\t\t\t\t\t INSTRUCAO DO MAL: %x", IR);
-
-        printf("\n\nEstou na esquerda");
-
 
         //Instrucao Tipo 1 & 2
         if (IR >= hlt && IR <= stb) {
@@ -53,12 +49,10 @@ void decodifica() {
         //Instrucao Tipo 3
         else if (IR >= movial && IR <= rsh) {
             IMM = (MBR&maskmar1)>>16;
-
-
-
         }
-        printf("\n O valor da Flag e: %i", LR);
+
         printf("\n\n\t\t O VALOR DE PC: %x",PC);
+        printf("\n O valor do LR e: %i", LR);
         printf("\n O valor do IR e: %x",IR);
         printf("\n O valor do IBR e: %x",IBR);
         printf("\n O valor do MBR e: %x",MBR);
@@ -81,9 +75,10 @@ void decodifica() {
 
 
         }
-        printf("\n\nEstou na direita");
-        printf("\n O valor da Flag e: %i", LR);
+        
+
         printf("\n\n\t\t O VALOR DE PC: %x",PC);
+        printf("\n O valor de LR e: %i", LR);
         printf("\n O valor do IR e: %x",IR);
         printf("\n O valor do IBR e: %x",IBR);
         printf("\n O valor do MBR e: %x",MBR);
@@ -99,13 +94,12 @@ void decodifica() {
 
 void executa() {
 
-    printf("\t\t\t\t\t\t IR: %x", IR);
 
     if (IR == hlt) {
 //        condicao de parada
     }
     if (IR == nop) {
-        printf("A instrucao e a: %x", IR);
+        
         if(LR==1){
             PC += 4;
         }
@@ -114,7 +108,7 @@ void executa() {
 
     }
     if (IR == add) {
-        printf("A instrucao e a: %x", IR);
+        
 
         A = A + B;
         if(LR==1){
@@ -125,7 +119,7 @@ void executa() {
 
     }
     if (IR == sub) {
-        printf("A instrucao e a: %x", IR);
+        
 
         A = A - B;
         if(LR==1){
@@ -134,7 +128,7 @@ void executa() {
         LR = !LR;
     }
     if (IR == mul) {
-        printf("A instrucao e a: %x", IR);
+        
         A = A*B;
         if(LR==1){
             PC += 4;
@@ -142,7 +136,7 @@ void executa() {
         LR = !LR;
     }
     if (IR == div) {
-        printf("A instrucao e a: %x", IR);
+        
         A = A/B;
         if(LR==1){
             PC += 4;
@@ -150,7 +144,7 @@ void executa() {
         LR = !LR;
     }
     if (IR == cmp) {
-        printf("A instrucao e a: %x", IR);
+        
 
         if (A == B) {
             E = 1;
@@ -178,7 +172,7 @@ void executa() {
     }
 
     if (IR == xchg) {
-        printf("A instrucao e a: %x", IR);
+        
 
         T = A;
 
@@ -193,7 +187,7 @@ void executa() {
         LR = !LR;
     }
     if (IR == and) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = A & B;
 
         if(LR==1){
@@ -202,7 +196,7 @@ void executa() {
         LR = !LR;
     }
     if (IR == or) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = A | B;
 
         if(LR==1){
@@ -211,7 +205,7 @@ void executa() {
         LR = !LR;
     }
     if (IR == xor) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = A ^ B;
 
         if(LR==1){
@@ -220,7 +214,7 @@ void executa() {
         LR = !LR;
     }
     if (IR == not) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = !A;
 
         if(LR==1){
@@ -232,7 +226,7 @@ void executa() {
 
     //INSTRUCOES DO TIPO 2
     if (IR == je) {
-        printf("\nA instrucao e a: %x", IR);
+        
         if (E == 1) {
             LR = 0;
             PC = MAR;
@@ -242,7 +236,7 @@ void executa() {
         }
     }
     if (IR == jne) {
-        printf("\nA instrucao e a: %x", IR);
+        
         if (E == 0) {
             LR = 0;
             PC = MAR;
@@ -253,7 +247,7 @@ void executa() {
 
     }
     if (IR == jl) {
-        printf("\nA instrucao e a: %x", IR);
+        
         if (L == 1) {
             LR=0;
             PC = MAR;
@@ -263,7 +257,7 @@ void executa() {
         }
     }
     if (IR == jle) {
-        printf("\nA instrucao e a: %x", IR);
+        
 
         if (E == 1 | L == 1) {
             LR = 0;
@@ -274,7 +268,7 @@ void executa() {
         }
     }
     if (IR == jg) {
-        printf("\nA instrucao e a: %x", IR);
+        
 
         if (G == 1) {
             LR = 0;
@@ -286,7 +280,7 @@ void executa() {
     }
 
     if (IR == jge) {
-        printf("\nA instrucao e a: %x", IR);
+        
         if (E == 1 | G == 1) {
             LR = 0;
             PC = MAR;
@@ -296,16 +290,14 @@ void executa() {
         }
     }
     if (IR == jmp) {
-        printf("\nA instrucao e a: %x", IR);
+        
         LR = 0;
         PC = MAR;
     }
 
 
     if (IR == lda) {
-        printf("\nA instrucao e a: %x", IR);
-        printf("\nFAZENDO O LOAD A");
-
+        
 
         MAR = PC;
         if(LR == 0){
@@ -317,9 +309,7 @@ void executa() {
             };
             MAR = MBR & maskstA;
 
-            printf("\n\n\n\t\t\t\t MAR: %x", MAR);
             A = MEMORIA[MAR];
-            printf("\n\n\n\t\t\t\t A: %x",A);
         }else{
 
             MBR = MEMORIA[MAR];
@@ -333,9 +323,6 @@ void executa() {
     }
 
     if (IR == ldb) {
-        printf("\nA instrucao e a: %x", IR);
-        printf("\nFAZENDO O LOAD B");
-        printf("\n O valor da Flag e: %i", LR);
 
         if(LR == 0){
             MAR = PC;
@@ -360,7 +347,7 @@ void executa() {
     }
 
     if (IR == sta) {
-        printf("\nA instrucao e a: %x", IR);
+        
 
         if(LR==0){
 
@@ -378,7 +365,7 @@ void executa() {
 
     }
     if (IR == stb) {
-        printf("\nA instrucao e a: %x", IR);
+        
         MEMORIA[MAR] = (B & maskstA);
         if(LR == 1){
 //            MEMORIA[MAR+0x2] = B & 0xff00;
@@ -393,7 +380,7 @@ void executa() {
 
     //INSTRUCAO TIPO 1
     if (IR == ldrb) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = B;
         if(LR==1){
             PC += 4;
@@ -404,14 +391,14 @@ void executa() {
 
     //INSTRUCAO TIPO 3
     if (IR == movial) {
-        printf("\nA instrucao e a: %x", IR);
+        
         if(LR==1){
             PC += 4;
         }
         LR= !LR;
     }
     if (IR == moviah) {
-        printf("\nA instrucao e a: %x", IR);
+        
         if(LR==1){
             PC += 4;
         }
@@ -419,7 +406,7 @@ void executa() {
     }
 
     if (IR == addia) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = A + IMM;
         printf("\n\n\n A no addia = %x %i",A, A);
         if(LR==1){
@@ -428,7 +415,7 @@ void executa() {
         LR= !LR;
     }
     if (IR == subia) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = A - IMM;
         if(LR==1){
             PC += 4;
@@ -436,7 +423,7 @@ void executa() {
         LR= !LR;
     }
     if (IR == mulia) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = A * IMM;
         if(LR==1){
             PC += 4;
@@ -444,7 +431,7 @@ void executa() {
         LR= !LR;
     }
     if (IR == divia) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = A / IMM;
         if(LR==1){
             PC += 4;
@@ -452,7 +439,7 @@ void executa() {
         LR= !LR;
     }
     if (IR == lsh) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = (A << IMM);
         if(LR==1){
             PC += 4;
@@ -460,7 +447,7 @@ void executa() {
         LR= !LR;
     }
     if (IR == rsh) {
-        printf("\nA instrucao e a: %x", IR);
+        
         A = (A >> IMM);
         if(LR==1){
             PC += 4;
@@ -534,7 +521,7 @@ void colocarInstru(int mem){
                     count++;
                 }
             }
-        } else{
+        }else{
             if(count == 0){
                 strcpy(mine,ponteiro);
 //                printf("\nMINE DA DIREITA: %s\n",mine);
@@ -573,101 +560,97 @@ void colocarInstru(int mem){
     if(strcmp(mine,"nop")== 0) {
         palavra = nop;
         palavra = (palavra << 11);
-    } else if(strcmp(mine,"add")== 0){
+    }else if(strcmp(mine,"add")== 0){
         palavra = add;
         palavra = (palavra << 11);
-    } else if(strcmp(mine,"sub")== 0) {
+    }else if(strcmp(mine,"sub")== 0) {
         palavra = sub;
         palavra = (palavra << 11);
-    } else if(strcmp(mine,"mul")== 0) {
+    }else if(strcmp(mine,"mul")== 0) {
         palavra = mul;
         palavra = (palavra << 11);
-    } else if(strcmp(mine,"div")== 0) {
+    }else if(strcmp(mine,"div")== 0) {
         palavra = div;
         palavra = (palavra << 11)| 00;
-    } else if(strcmp(mine,"cmp")== 0) {
+    }else if(strcmp(mine,"cmp")== 0) {
         palavra = cmp;
         palavra = (palavra << 11);
-    } else if(strcmp(mine,"xchg")== 0) {
+    }else if(strcmp(mine,"xchg")== 0) {
         palavra = xchg;
         palavra = (palavra << 11);
-    } else if(strcmp(mine,"ldrb")== 0) {
+    }else if(strcmp(mine,"ldrb")== 0) {
         palavra = ldrb;
         palavra = (palavra << 11);
-    }
-    else if(strcmp(mine,"and")== 0) {
+    }else if(strcmp(mine,"and")== 0) {
         palavra = and;
         palavra = (palavra << 11);
-    } else if(strcmp(mine,"or")== 0) {
+    }else if(strcmp(mine,"or")== 0) {
         palavra = or;
         palavra = (palavra << 11);
-    } else if(strcmp(mine,"xor")== 0) {
+    }else if(strcmp(mine,"xor")== 0) {
         palavra = xor;
         palavra = (palavra << 11);
-    } else if(strcmp(mine,"not")== 0) {
+    }else if(strcmp(mine,"not")== 0) {
         palavra = not;
         palavra = (palavra << 11);
-    } else if(strcmp(mine,"je")== 0) {
+    }else if(strcmp(mine,"je")== 0) {
         palavra = je;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"jne")== 0) {
+    }else if(strcmp(mine,"jne")== 0) {
         palavra = jne;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"jl")== 0) {
+    }else if(strcmp(mine,"jl")== 0) {
         palavra = jl;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"jle")== 0) {
+    }else if(strcmp(mine,"jle")== 0) {
         palavra = jle;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"jg")== 0) {
+    }else if(strcmp(mine,"jg")== 0) {
         palavra = jg;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"jge")== 0) {
+    }else if(strcmp(mine,"jge")== 0) {
         palavra = jge;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"jmp")== 0) {
+    }else if(strcmp(mine,"jmp")== 0) {
         palavra = jmp;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"lda")== 0){
+    }else if(strcmp(mine,"lda")== 0){
         palavra = lda;
         palavra = (palavra << 11)| rg0;
     }else if(strcmp(mine,"ldb")== 0){
         palavra = ldb;
         palavra = (palavra << 11)| rg0;
-    }
-    else if(strcmp(mine,"sta")== 0){
+    }else if(strcmp(mine,"sta")== 0){
         palavra = sta;
         palavra = (palavra << 11)| rg0;
-
-    }  else if(strcmp(mine,"stb")== 0){
+    }else if(strcmp(mine,"stb")== 0){
         palavra = stb;
         palavra = (palavra << 11)| rg0;
-
-    } else if(strcmp(mine,"movial")== 0) {
+    }else if(strcmp(mine,"movial")== 0) {
         palavra = movial;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"moviah")== 0) {
+    }else if(strcmp(mine,"moviah")== 0) {
         palavra = moviah;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"addia")== 0) {
+    }else if(strcmp(mine,"addia")== 0) {
         palavra = addia;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"subia")== 0) {
+    }else if(strcmp(mine,"subia")== 0) {
         palavra = subia;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"mulia")== 0) {
+    }else if(strcmp(mine,"mulia")== 0) {
         palavra = mulia;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"divia")== 0) {
+    }else if(strcmp(mine,"divia")== 0) {
         palavra = divia;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"lsh")== 0) {
+    }else if(strcmp(mine,"lsh")== 0) {
         palavra = lsh;
         palavra = (palavra << 11)| rg0;
-    } else if(strcmp(mine,"rsh")== 0) {
+    }else if(strcmp(mine,"rsh")== 0) {
         palavra = rsh;
         palavra = (palavra << 11)| rg0;
-    } else {
+    }else {
         palavra = 0x0000;
     }
 
@@ -805,7 +788,6 @@ void colocarInstru(int mem){
     }
 
     palavra = palavra << 16 | palavra2;
-    printf("%x",palavra);
     guardarMemoria(mem,palavra);
 }
 
@@ -826,7 +808,6 @@ void lerArquivo(){
             }else if(count == 2){
                 if(tipo == 0x64){
                     valor = (int)strtol(pt,NULL,16);
-                    printf("\nVALOR: %x",valor);
                     MEMORIA[mem] = (valor & 0x0000ff00) >> 8;
                     MEMORIA[mem++]   = (valor & 0x000000ff);
                 }else{
@@ -845,127 +826,8 @@ void lerArquivo(){
     fclose(arq);
 }
 
-
 int main() {
 
-//
-//    MEMORIA[0x00] = 0x98;
-//    MEMORIA[0x01] = 0x96;
-//    MEMORIA[0x02] = 0xa0;
-//    MEMORIA[0x03] = 0x98;
-//
-//    MEMORIA[0x04] = 0x18;
-//    MEMORIA[0x05] = 0x00;
-//    MEMORIA[0x06] = 0x38;
-//    MEMORIA[0x07] = 0x00;
-//
-//    MEMORIA[0x08] = 0x98;
-//    MEMORIA[0x09] = 0x94;
-//    MEMORIA[0x0a] = 0x28;
-//    MEMORIA[0x0b] = 0x00;
-//
-//    MEMORIA[0x0c] = 0xa0;
-//    MEMORIA[0x0d] = 0x92;
-//    MEMORIA[0x0e] = 0x20;
-//    MEMORIA[0x0f] = 0x00;
-//
-//    MEMORIA[0x10] = 0xa0;
-//    MEMORIA[0x11] = 0x90;
-//    MEMORIA[0x12] = 0x10;
-//    MEMORIA[0x13] = 0x00;
-//
-//    MEMORIA[0x14] = 0xa8;
-//    MEMORIA[0x15] = 0x8e;
-//    MEMORIA[0x16] = 0x00;
-//    MEMORIA[0x17] = 0x00;
-//
-////DADOS
-//    MEMORIA[0x90] = 0x20;
-//    MEMORIA[0x92] = 0x03;
-//    MEMORIA[0x94] = 0x04;
-//    MEMORIA[0x96] = 0x05;
-//    MEMORIA[0x98] = 0x03;
-
-//
-////    0;i;lda 90 / ldb 92
-//    MEMORIA[0x00] = 0x98;
-//    MEMORIA[0x01] = 0x90;
-//    MEMORIA[0x02] = 0xa0;
-//    MEMORIA[0x03] = 0x92;
-//
-////    4;i;div / sta 88
-//    MEMORIA[0x04] = 0x28;
-//    MEMORIA[0x05] = 0x00;
-//    MEMORIA[0x06] = 0xa8;
-//    MEMORIA[0x07] = 0x88;
-//
-////    8;i;lda 96 / lda 98
-//    MEMORIA[0x08] = 0x98;
-//    MEMORIA[0x09] = 0x96;
-//    MEMORIA[0x0a] = 0x98;
-//    MEMORIA[0x0b] = 0x98;
-//
-////c;i;sub/lda 94
-//    MEMORIA[0x0c] = 0x18;
-//    MEMORIA[0x0d] = 0x00;
-//    MEMORIA[0x0e] = 0x98;
-//    MEMORIA[0x0f] = 0x94;
-//
-////10;i;mul/lda 88
-//    MEMORIA[0x10] = 0x20;
-//    MEMORIA[0x11] = 0x00;
-//    MEMORIA[0x12] = 0x98;
-//    MEMORIA[0x13] = 0x88;
-//
-////14;i;add / lda 8a
-//    MEMORIA[0x14] = 0x10;
-//    MEMORIA[0x15] =0x00;
-//    MEMORIA[0x16] = 0x98;
-//    MEMORIA[0x17] = 0x8a;
-//
-////18;i;add / sta 8a
-//    MEMORIA[0x18] = 0x10;
-//    MEMORIA[0x19] = 0x00;
-//    MEMORIA[0x1a] = 0xa8;
-//    MEMORIA[0x1b] = 0x8a;
-//
-////1c;i;lda 8c / ldb 8e
-//    MEMORIA[0x1c] = 0x98;
-//    MEMORIA[0x1d] = 0x8c;
-//    MEMORIA[0x1e] = 0xa0;
-//    MEMORIA[0x1f] = 0x8e;
-//
-////20;i;addia 1 / sta 8c
-//    MEMORIA[0x20] = 0xd0;
-//    MEMORIA[0x21] = 0x01;
-//    MEMORIA[0x22] = 0xa8;
-//    MEMORIA[0x23] = 0x8c;
-//
-////24;i;cmp / jle 0
-//    MEMORIA[0x24] = 0x30;
-//    MEMORIA[0x25] = 0x00;
-//    MEMORIA[0x26] = 0x78;
-//    MEMORIA[0x27] = 0x00;
-//
-////28;i;hlt / hlt
-//    MEMORIA[0x28] = 0x00;
-//    MEMORIA[0x29] = 0x00;
-//    MEMORIA[0x2a] = 0x00;
-//    MEMORIA[0x2b] = 0x00;
-//// 8a;d;0
-//    MEMORIA[0x8a] = 0x00;
-////8c;d;1
-//    MEMORIA[0x8c] = 0x01;
-////8e;d;a
-//    MEMORIA[0x8e] = 0x0a;
-////90;d;a
-//    MEMORIA[0x90] = 0x0a;
-////92;d;5;
-//    MEMORIA[0x92] = 0x05;
-
-
-    // NA POSICAO: 0x8a  RESPOSTA 50 OU 0X32
-//    lerTexto();
     lerArquivo();
     PC = 0;
     MAR = 0;
@@ -979,7 +841,6 @@ int main() {
 
         decodifica();
         executa();
-
 
         printf("\nRegistrador A tem o valor %x", A);
         printf("\nRegistrador B tem o valor %x\n", B);
@@ -995,11 +856,8 @@ int main() {
         printf("\n\t\t\t\t========== FIM DO CICLO ==========");
         printf("\n");
         printf("\nPressione enter para executar o proximo ciclo de instrucao\n");
-//        getchar();
-
-
-}
-
+        getchar();
+    }
 
     return 0;
 }

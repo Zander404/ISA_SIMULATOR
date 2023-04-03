@@ -1,10 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/ISA_SIMULATOR.dir/leitor.c.obj"
-  "CMakeFiles/ISA_SIMULATOR.dir/leitor.c.obj.d"
   "CMakeFiles/ISA_SIMULATOR.dir/main.c.obj"
   "CMakeFiles/ISA_SIMULATOR.dir/main.c.obj.d"
-  "CMakeFiles/ISA_SIMULATOR.dir/qualqyer.c.obj"
-  "CMakeFiles/ISA_SIMULATOR.dir/qualqyer.c.obj.d"
   "CMakeFiles/ISA_SIMULATOR.dir/teste.c.obj"
   "CMakeFiles/ISA_SIMULATOR.dir/teste.c.obj.d"
   "ISA_SIMULATOR.exe"
