@@ -1,0 +1,3 @@
+C:/Users/Pedrofff/CLionProjects/Nova pasta/ISA_SIMULATOR/cmake-build-debug/CMakeFiles/ISA_SIMULATOR.dir
+C:/Users/Pedrofff/CLionProjects/Nova pasta/ISA_SIMULATOR/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Pedrofff/CLionProjects/Nova pasta/ISA_SIMULATOR/cmake-build-debug/CMakeFiles/rebuild_cache.dir

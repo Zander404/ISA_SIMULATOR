@@ -1,0 +1,3 @@
+C:\Users\Pedrofff\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\231.8109.174\bin\cmake\win\x64\bin\cmake.exe -E rm -f CMakeFiles\ISA_SIMULATOR.dir/objects.a
+C:\Users\Pedrofff\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\231.8109.174\bin\mingw\bin\ar.exe qc CMakeFiles\ISA_SIMULATOR.dir/objects.a @CMakeFiles\ISA_SIMULATOR.dir\objects1
+C:\Users\Pedrofff\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\231.8109.174\bin\mingw\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\ISA_SIMULATOR.dir/objects.a -Wl,--no-whole-archive -o ISA_SIMULATOR.exe -Wl,--out-implib,libISA_SIMULATOR.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\ISA_SIMULATOR.dir\linkLibs.rsp
