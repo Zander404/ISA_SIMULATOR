@@ -8,10 +8,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/alexa/CLionProjects/ISA_SIMULATOR/leitor.c" "CMakeFiles/ISA_SIMULATOR.dir/leitor.c.obj" "gcc" "CMakeFiles/ISA_SIMULATOR.dir/leitor.c.obj.d"
-  "C:/Users/alexa/CLionProjects/ISA_SIMULATOR/main.c" "CMakeFiles/ISA_SIMULATOR.dir/main.c.obj" "gcc" "CMakeFiles/ISA_SIMULATOR.dir/main.c.obj.d"
-  "C:/Users/alexa/CLionProjects/ISA_SIMULATOR/qualqyer.c" "CMakeFiles/ISA_SIMULATOR.dir/qualqyer.c.obj" "gcc" "CMakeFiles/ISA_SIMULATOR.dir/qualqyer.c.obj.d"
-  "C:/Users/alexa/CLionProjects/ISA_SIMULATOR/teste.c" "CMakeFiles/ISA_SIMULATOR.dir/teste.c.obj" "gcc" "CMakeFiles/ISA_SIMULATOR.dir/teste.c.obj.d"
+  "C:/Users/Pedrofff/CLionProjects/Nova pasta/ISA_SIMULATOR/leitor.c" "CMakeFiles/ISA_SIMULATOR.dir/leitor.c.obj" "gcc" "CMakeFiles/ISA_SIMULATOR.dir/leitor.c.obj.d"
+  "C:/Users/Pedrofff/CLionProjects/Nova pasta/ISA_SIMULATOR/main.c" "CMakeFiles/ISA_SIMULATOR.dir/main.c.obj" "gcc" "CMakeFiles/ISA_SIMULATOR.dir/main.c.obj.d"
+  "C:/Users/Pedrofff/CLionProjects/Nova pasta/ISA_SIMULATOR/qualqyer.c" "CMakeFiles/ISA_SIMULATOR.dir/qualqyer.c.obj" "gcc" "CMakeFiles/ISA_SIMULATOR.dir/qualqyer.c.obj.d"
+  "C:/Users/Pedrofff/CLionProjects/Nova pasta/ISA_SIMULATOR/teste.c" "CMakeFiles/ISA_SIMULATOR.dir/teste.c.obj" "gcc" "CMakeFiles/ISA_SIMULATOR.dir/teste.c.obj.d"
   )
 
 # Targets to which this target links.

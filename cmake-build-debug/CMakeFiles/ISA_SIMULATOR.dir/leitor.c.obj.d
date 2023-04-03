@@ -1,2 +1,2 @@
 CMakeFiles/ISA_SIMULATOR.dir/leitor.c.obj: \
- C:\Users\alexa\CLionProjects\ISA_SIMULATOR\leitor.c
+ C:\Users\Pedrofff\CLionProjects\Nova\ pasta\ISA_SIMULATOR\leitor.c
