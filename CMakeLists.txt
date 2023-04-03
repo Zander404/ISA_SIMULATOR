@@ -3,4 +3,4 @@ project(ISA_SIMULATOR C)
 
 set(CMAKE_C_STANDARD 90)
 
-add_executable(ISA_SIMULATOR main.c leitor.c instrucoes.txt)
+add_executable(ISA_SIMULATOR main.c leitor.c instrucoes.txt teste.c qualqyer.c qualqyer.c qualqyer.c)
