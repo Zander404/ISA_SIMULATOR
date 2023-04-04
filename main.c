@@ -86,7 +86,6 @@ void decodifica() {
         printf("\n O valor d o IMM e: %x", IMM);
         printf("\n");
 
-
     }
 
 }
@@ -467,11 +466,10 @@ void guardarMemoria(unsigned int mem ,unsigned int aux){
 }
 
 void colocarInstru(int mem){
-    char mine[8], mine2[8],texto[8]; // aux recebe rg0
-    unsigned char rg0, A;
+    char mine[8], mine2[8],texto[8];
+    unsigned char A, B;
     char* ponteiro;
-    char corretor;
-    char* teste;
+    char* ponteiro2;
     unsigned int count = 0, imediatoMem, palavra, palavra2;
 
     ponteiro = strtok(pt," /");
@@ -496,16 +494,16 @@ void colocarInstru(int mem){
                     if(count == 0){
 
                         strcpy(texto,ponteiro);
-                        teste = texto;
+                        ponteiro2 = texto;
 //                        printf("\nPONTEIRO DA ESQUERDA: |%s| \n",ponteiro);
-                        teste[strlen(teste) - 2] = 0;
-//                        printf("\nteste DA ESQUERDA: |%s| \n",texto);
-                        if(strcmp(teste, "add") == 0 || strcmp(teste, "hlt") == 0 ||strcmp(teste, "nop") == 0 ||strcmp(teste, "sub") == 0 ||
-                           strcmp(teste, "mul") == 0 ||strcmp(teste, "div") == 0 ||strcmp(teste, "cmp") == 0 ||strcmp(teste, "xchg") == 0  ||
-                           strcmp(teste, "and") == 0 ||strcmp(teste, "or") == 0 |strcmp(teste, "xor") == 0 ||strcmp(teste, "not") == 0 ||
-                           strcmp(teste, "ldrb") == 0 ){
+                        ponteiro2[strlen(ponteiro2) - 2] = 0;
+//                        printf("\nponteiro2 DA ESQUERDA: |%s| \n",texto);
+                        if(strcmp(ponteiro2, "add") == 0 || strcmp(ponteiro2, "hlt") == 0 ||strcmp(ponteiro2, "nop") == 0 ||strcmp(ponteiro2, "sub") == 0 ||
+                           strcmp(ponteiro2, "mul") == 0 ||strcmp(ponteiro2, "div") == 0 ||strcmp(ponteiro2, "cmp") == 0 ||strcmp(ponteiro2, "xchg") == 0  ||
+                           strcmp(ponteiro2, "and") == 0 ||strcmp(ponteiro2, "or") == 0 |strcmp(ponteiro2, "xor") == 0 ||strcmp(ponteiro2, "not") == 0 ||
+                           strcmp(ponteiro2, "ldrb") == 0 ){
 
-                            strcpy(mine2,teste);
+                            strcpy(mine2,ponteiro2);
                         }else{
 
                             strcpy(mine2,ponteiro);
@@ -527,21 +525,21 @@ void colocarInstru(int mem){
 //                printf("\nMINE DA DIREITA: %s\n",mine);
             }
             if (count == 1){
-                rg0 = (int)strtol(ponteiro,NULL,16);
-                A = rg0;
-//                printf("\nRG0 DA DIREITA: %x\n",rg0);
+                A = (int)strtol(ponteiro,NULL,16);
+                B = A;
+
             }
             if(count == 2){
                 strcpy(texto,ponteiro);
-                teste = texto;
+                ponteiro2 = texto;
 //                printf("\nPONTEIRO DA ESQUERDA: |%s| \n",ponteiro);
-                teste[strlen(teste) - 2] = 0;
-                if(strcmp(teste, "add") == 0 || strcmp(teste, "hlt") == 0 ||strcmp(teste, "nop") == 0 ||strcmp(teste, "sub") == 0 ||
-                   strcmp(teste, "mul") == 0 ||strcmp(teste, "div") == 0 ||strcmp(teste, "cmp") == 0 ||strcmp(teste, "xchg") == 0  ||
-                   strcmp(teste, "and") == 0 ||strcmp(teste, "or") == 0 |strcmp(teste, "xor") == 0 ||strcmp(teste, "not") == 0 ||
-                   strcmp(teste, "ldrb") == 0 ){
+                ponteiro2[strlen(ponteiro2) - 2] = 0;
+                if(strcmp(ponteiro2, "add") == 0 || strcmp(ponteiro2, "hlt") == 0 ||strcmp(ponteiro2, "nop") == 0 ||strcmp(ponteiro2, "sub") == 0 ||
+                   strcmp(ponteiro2, "mul") == 0 ||strcmp(ponteiro2, "div") == 0 ||strcmp(ponteiro2, "cmp") == 0 ||strcmp(ponteiro2, "xchg") == 0  ||
+                   strcmp(ponteiro2, "and") == 0 ||strcmp(ponteiro2, "or") == 0 |strcmp(ponteiro2, "xor") == 0 ||strcmp(ponteiro2, "not") == 0 ||
+                   strcmp(ponteiro2, "ldrb") == 0 ){
 
-                    strcpy(mine2,teste);
+                    strcpy(mine2,ponteiro2);
                 }else{
                     strcpy(mine2,ponteiro);
                 }
@@ -595,61 +593,61 @@ void colocarInstru(int mem){
         palavra = (palavra << 11);
     }else if(strcmp(mine,"je")== 0) {
         palavra = je;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"jne")== 0) {
         palavra = jne;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"jl")== 0) {
         palavra = jl;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"jle")== 0) {
         palavra = jle;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"jg")== 0) {
         palavra = jg;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"jge")== 0) {
         palavra = jge;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"jmp")== 0) {
         palavra = jmp;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"lda")== 0){
         palavra = lda;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"ldb")== 0){
         palavra = ldb;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"sta")== 0){
         palavra = sta;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"stb")== 0){
         palavra = stb;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"movial")== 0) {
         palavra = movial;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"moviah")== 0) {
         palavra = moviah;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"addia")== 0) {
         palavra = addia;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"subia")== 0) {
         palavra = subia;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"mulia")== 0) {
         palavra = mulia;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"divia")== 0) {
         palavra = divia;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"lsh")== 0) {
         palavra = lsh;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else if(strcmp(mine,"rsh")== 0) {
         palavra = rsh;
-        palavra = (palavra << 11)| rg0;
+        palavra = (palavra << 11)| A;
     }else {
         palavra = 0x0000;
     }
@@ -848,7 +846,7 @@ int main() {
         printf("---------------Memorias-----------------\n");
         int i;
         for(i = 0; i < 154 ; i++) {
-            printf("%d=[%x]  ",i,MEMORIA[i]);
+            printf("%x=[%x]  ",i,MEMORIA[i]);
             if(i%10 == 0 && i!=0){
                 printf("\n");
             }
